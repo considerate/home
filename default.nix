@@ -10,7 +10,7 @@
     ./emacs
     ./direnv
     ./deploy-cross-compass
-  ] ++ lib.optionals nixosConfig.considerate.desktop [
+  ] ++ lib.optionals (nixosConfig.considerate.desktop or false) [
     ./st
     ./autorandr
     ./compton
@@ -22,6 +22,7 @@
     ./firefox
     ./spotify
   ];
+
   manual.manpages.enable = true;
 
   home.sessionVariables = { EDITOR = "nvim"; };
