@@ -1,0 +1,18 @@
+/* XPM */
+static char *volume_xbm[] = {
+/* columns rows colors chars-per-pixel */
+"10 10 2 1 ",
+"  c None",
+". c white",
+/* pixels */
+"          ",
+"        . ",
+"     . .. ",
+"  .. . .. ",
+" ... . .. ",
+" ... . .. ",
+"  .. . .. ",
+"     . .. ",
+"        . ",
+"          "
+};

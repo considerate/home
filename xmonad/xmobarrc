@@ -1,0 +1,94 @@
+Config {
+  font = "xft:FiraCode:size=10:antialias=true,NotoSansCJKJP:size=10:antialias=true"
+    , bgColor = "#181818"
+    , alpha = 230
+    , fgColor = "#c0c5ce"
+    , position = TopW L 100
+    , commands =
+      [ Run Volume "default" "Master"
+        [ "--template"
+        , "<status> <volume>%"
+        , "-p", "3"
+        , "--"
+        , "--on"
+        , "<volumeipat>"
+        , "--off"
+        , "<icon=.xmonad/icons/volume0.2x.xpm/>"
+        , "--onc"
+        , "#c0c5ce"
+        , "--offc"
+        , "#c0c5ce"
+        , "--volume-icon-pattern"
+        , "<icon=.xmonad/icons/volume%%.2x.xpm/>"
+        ] 5
+
+      , Run Cpu
+        [ "--template"
+        , "<icon=.xmonad/icons/cpu.2x.xpm/> <total>%"
+        , "--Low","3"
+        , "--High","50"
+        , "--low","#c0c5ce"
+        , "--normal","#c0c5ce"
+        , "--high","#bf616a"
+        , "-p", "3"
+        ] 50
+
+      , Run Memory
+        [ "-t"
+        , "<icon=.xmonad/icons/mem.2x.xpm/> <usedratio>%"
+        , "-H","80"
+        , "-L","10"
+        , "-l","#c0c5ce"
+        , "-n","#c0c5ce"
+        , "-h","#bf616a"
+        , "-p", "3"
+        ]
+        50
+
+      , Run Date "%a %b %_d %H:%M" "date" 300
+      , Run DynNetwork
+        [ "-t"
+        , "<icon=.xmonad/icons/net_down.2x.xpm/> <rx> <icon=.xmonad/icons/net_up.2x.xpm/> <tx>"
+        , "-H","400"
+        , "-L","10"
+        , "-h","#c0c5ce"
+        , "-l","#c0c5ce"
+        , "-n","#c0c5ce"
+        ] 50
+
+      , Run CoreTemp
+        [ "-t"
+        , "<icon=.xmonad/icons/temp.2x.xpm/> <core0>°"
+        , "-L", "30"
+        , "-H", "75"
+        , "-l", "#8fa1b3"
+        , "-n", "#c0c5ce"
+        , "-h", "#bf616a"
+        ] 50
+
+      -- battery monitor
+      , Run BatteryP [ "BAT0" ]
+        [ "--template"
+        , "<icon=.xmonad/icons/battery.2x.xpm/> <acstatus>"
+        , "--Low", "10" -- units: %
+        , "--High", "80" -- units: %
+        , "--low", "#bf616a"
+        , "--normal","#c0c5ce"
+        , "--high", "#a3b38c"
+        , "-p", "3"
+
+        , "--" -- battery specific options
+        -- discharging status
+        , "-o"   , "<left>%"
+        -- AC "on" status
+        , "-O"   , "<left>%" -- 50fa7b
+        -- charged status
+        , "-i"   , "<fc=#a3be8c>100%</fc>"
+        ] 50
+      , Run StdinReader
+      ]
+    , sepChar = "%"
+    , alignSep = "}{"
+    , template = " %StdinReader% }{  %default:Master% <icon=.xmonad/icons/sep.xpm/> %cpu% <icon=.xmonad/icons/sep.xpm/> %memory% <icon=.xmonad/icons/sep.xpm/> %battery% <icon=.xmonad/icons/sep.xpm/> %dynnetwork% <icon=.xmonad/icons/sep.xpm/> %coretemp% <icon=.xmonad/icons/sep.xpm/> %date% "
+}
+
