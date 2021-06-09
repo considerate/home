@@ -12,6 +12,7 @@
     ./deploy-cross-compass
   ] ++ lib.optionals (nixosConfig.considerate.desktop or false) [
     ./st
+    ./fonts
     ./autorandr
     ./compton
     ./highdpi
