@@ -44,7 +44,7 @@ keyBindings sessionId =
   , ((0, xF86XK_KbdBrightnessDown), spawn "kbdlight down")
   , ((mod4Mask, xK_w), spawn "next")
   , ((mod4Mask, xK_p), spawn "rofi -show combi")
-  , ((mod4Mask .|. shiftMask, xK_Return), spawn "st")
+  , ((mod4Mask .|. shiftMask, xK_Return), spawn "kitty")
   , ((mod4Mask .|. shiftMask, xK_p), takeScreenShot)
   , ((0, xK_F5), takeScreenShot)
   , ((mod4Mask .|. controlMask, xK_r), spawn "true && systemctl reboot")

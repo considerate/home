@@ -22,6 +22,7 @@
     ./chromium
     ./firefox
     ./spotify
+    ./sway
   ];
 
   manual.manpages.enable = true;

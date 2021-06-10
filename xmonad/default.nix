@@ -1,5 +1,6 @@
 { config, lib, pkgs, ... }: {
   home.packages = [ pkgs.xmobar ];
+  gtk.enable = true;
   xsession = {
     enable = true;
     windowManager.xmonad = {
@@ -17,7 +18,7 @@
       package = pkgs.capitaine-cursors;
       name = "capitaine-cursors";
       defaultCursor = "left_ptr";
-      size = 64;
+      size = 48;
     };
   };
   home.file.${config.xsession.scriptPath}.text = lib.mkAfter ''
