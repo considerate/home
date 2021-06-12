@@ -17,7 +17,13 @@
         "eDP-1" = {
           resolution = "3840x2160";
           scale = "2";
-          background = "${../wallpaper/wallpapers/castles/DROTTNIGHOLM.jpg} fill";
+          background =
+            let
+              wallpaper = ../wallpaper/wallpapers/DROTTNINGHOLM.jpg;
+            in
+            if builtins.pathExists wallpaper
+            then "${wallpaper} fill"
+            else pkgs.nixos-artwork.wallpapers.simple-dark-gray.kdeFilePath;
         };
       };
       input = {

@@ -57,7 +57,7 @@ layoutSpiral = spiral (125 % 146)
 layoutWide = Mirror (Tall 1 (3/100) (3/5))
 layoutFull = Full
 
-fehBackground = spawn "feh --no-fehbg --bg-scale --randomize -r ~/.wallpapers/castles"
+fehBackground = spawn "feh --no-fehbg --bg-scale --randomize -r ~/.wallpapers"
 
 layouts = avoidStruts $ gaps $ noBorders $ layoutSpiral ||| layoutTall ||| layoutWide ||| layoutFull
 
