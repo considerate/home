@@ -26,11 +26,11 @@
           };
         };
       };
-      extraConfig = {
-        display-combi = "Go";
-        modi = "combi,calc";
-        combi-modi = "window,run,ssh";
-      };
+      # extraConfig = {
+      #   display-combi = "Go";
+      #   modi = "combi,calc";
+      #   combi-modi = "window,run,ssh";
+      # };
       terminal = "${pkgs.kitty}/bin/kitty";
     };
   };

@@ -91,7 +91,6 @@ main = do
             layoutHook = layouts,
             terminal = "st",
             logHook = dynamicLogWithPP (xmobarPPConfig xmproc),
-            startupHook = fehBackground,
             borderWidth = 0,
             manageHook = manageHook desktopConfig <+> (isFullscreen --> doFullFloat),
             handleEventHook = handleEventHook desktopConfig <+> fullscreenEventHook

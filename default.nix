@@ -10,7 +10,7 @@
     ./emacs
     ./direnv
     ./deploy-cross-compass
-  ] ++ lib.optionals (nixosConfig.considerate.desktop or false) [
+  ] ++ lib.optionals true [
     ./st
     ./fonts
     ./autorandr
@@ -22,11 +22,13 @@
     ./chromium
     ./firefox
     ./spotify
-    ./sway
   ];
 
   manual.manpages.enable = true;
 
+  nixpkgs.config.allowUnfree = true;
+  home.username = "viktor";
+  home.homeDirectory = "/home/viktor";
   home.sessionVariables = { EDITOR = "nvim"; };
-  home.stateVersion = "21.05";
+  home.stateVersion = "21.03";
 }

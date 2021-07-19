@@ -1,7 +1,7 @@
 { pkgs, ... }:
 {
   programs.emacs = {
-    enable = true;
+    enable = false;
     extraPackages = epkgs:
       [
         epkgs.use-package-ensure-system-package
@@ -17,7 +17,7 @@
       ];
   };
 
-  services.emacs.enable = true;
+  services.emacs.enable = false;
   home.file.".emacs.d" = { source = ./emacs.d; recursive = true; };
 
   programs.git = {
