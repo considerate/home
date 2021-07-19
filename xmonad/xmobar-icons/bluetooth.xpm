@@ -1,0 +1,33 @@
+/* XPM */
+static char *bluetooth[] = {
+/* columns rows colors chars-per-pixel */
+"18 24 3 1 ",
+"  c #005FA9",
+". c None",
+"r c #FFFFFF",
+/* pixels */
+".......    ......."
+"....          ...."
+"...     r      ..."
+"..      rr      .."
+".       rrr      ."
+".       rrrr     ."
+".       rrrrr    ."
+"    r   rr rrr    "
+"    rr  rr  rr    "
+"     rr rr rr     "
+"      rrrrrr      "
+"        rrr       "
+"        rrr       "
+"      rrrrrr      "
+"     rr rr rr     "
+"    rr  rr  rr    "
+".   r   rr  rr   ."
+".       rr rr    ."
+".       rrrr     ."
+".       rrr      ."
+"..      rr      .."
+"...     r      ..."
+"....          ...."
+".......    ......."
+};

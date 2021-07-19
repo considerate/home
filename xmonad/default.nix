@@ -1,5 +1,6 @@
 { config, lib, pkgs, ... }: {
-  home.packages = [ pkgs.xmobar ];
+  home.packages = [ pkgs.xmobar pkgs.playerctl ];
+  services.playerctld.enable = true;
   gtk.enable = true;
   xsession = {
     enable = true;

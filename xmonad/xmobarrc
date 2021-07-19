@@ -21,7 +21,7 @@ Config {
         , "--volume-icon-pattern"
         , "<icon=.xmonad/icons/volume%%.2x.xpm/>"
         ] 5
-
+      , Run Com "bluetooth-connected-devices" [] "bt" 10
       , Run Cpu
         [ "--template"
         , "<icon=.xmonad/icons/cpu.2x.xpm/> <total>%"
@@ -89,6 +89,6 @@ Config {
       ]
     , sepChar = "%"
     , alignSep = "}{"
-    , template = " %StdinReader% }{  %default:Master% <icon=.xmonad/icons/sep.xpm/> %cpu% <icon=.xmonad/icons/sep.xpm/> %memory% <icon=.xmonad/icons/sep.xpm/> %battery% <icon=.xmonad/icons/sep.xpm/> %dynnetwork% <icon=.xmonad/icons/sep.xpm/> %coretemp% <icon=.xmonad/icons/sep.xpm/> %date% "
+    , template = " %StdinReader% }{  %default:Master% <icon=.xmonad/icons/sep.xpm/> <icon=.xmonad/icons/bluetooth.xpm/> %bt% <icon=.xmonad/icons/sep.xpm/> %cpu% <icon=.xmonad/icons/sep.xpm/> %memory% <icon=.xmonad/icons/sep.xpm/> %battery% <icon=.xmonad/icons/sep.xpm/> %dynnetwork% <icon=.xmonad/icons/sep.xpm/> %coretemp% <icon=.xmonad/icons/sep.xpm/> %date% "
 }
 
