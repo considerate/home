@@ -1,9 +1,10 @@
-{ pkgs, ... }: {
+{ pkgs, config, ... }: {
   programs = {
     rofi = {
-      package =
-        pkgs.rofi.override { plugins = [ pkgs.rofi-calc ]; };
-      enable = true;
+      package = pkgs.rofi.override {
+        plugins = [ pkgs.rofi-calc ];
+      };
+      enable = config.considerate.desktop;
       padding = 24;
       borderWidth = 2;
       separator = "dash";

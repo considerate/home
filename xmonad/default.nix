@@ -1,7 +1,7 @@
-{ config, lib, pkgs, ... }: {
-  home.packages = [ pkgs.xmobar pkgs.playerctl ];
-  services.playerctld.enable = true;
+{ config, lib, pkgs, ... }:
+lib.mkIf config.considerate.desktop {
   gtk.enable = true;
+  home.packages = [ pkgs.xmobar ];
   xsession = {
     enable = true;
     windowManager.xmonad = {

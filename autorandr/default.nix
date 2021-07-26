@@ -1,5 +1,5 @@
-{ pkgs, lib, ... }:
-{
+{ config, pkgs, lib, ... }:
+lib.mkIf config.considerate.desktop {
   systemd.user.services.autorandr = {
     Unit.After = [ "sleep.target" ];
     Unit.StartLimitInterval = 5;

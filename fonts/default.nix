@@ -1,4 +1,4 @@
-{ pkgs, lib, ... }:
+{ pkgs, config, lib, ... }:
 let
   defaultFontsConf = cfg:
     let genDefault = fonts: name:
@@ -30,8 +30,8 @@ let
     };
 in
 {
-  fonts.fontconfig.enable = true;
-  home.packages = [
+  fonts.fontconfig.enable = config.considerate.desktop;
+  home.packages = lib.optionals config.considerate.desktop [
     pkgs.fira-code
     pkgs.noto-fonts
     pkgs.noto-fonts-cjk

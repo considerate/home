@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ config, lib, pkgs, ... }:
 let
   inherit (pkgs) fetchurl;
   configFile = pkgs.writeText "config.def.h" (builtins.readFile ./config.h);
@@ -37,4 +37,6 @@ let
     ];
   });
 in
-{ home.packages = [ myst ]; }
+{
+  home.packages = lib.optionals config.considerate.desktop [ myst ];
+}

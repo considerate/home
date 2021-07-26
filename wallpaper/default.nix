@@ -1,7 +1,7 @@
-{ pkgs, ... }:
+{ pkgs, config, ... }:
 {
   services.random-background = {
-    enable = true;
+    enable = config.considerate.desktop;
     imageDirectory =
       let
         wallpapers = pkgs.runCommand "collect-wallpapers" { } ''

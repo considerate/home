@@ -10,7 +10,7 @@
     ./emacs
     ./direnv
     ./deploy-cross-compass
-  ] ++ lib.optionals (nixosConfig.considerate.desktop or false) [
+    ./desktop
     ./st
     ./fonts
     ./autorandr
@@ -22,7 +22,7 @@
     ./chromium
     ./firefox
     ./spotify
-    ./sway
+    ./playerctld
   ];
 
   manual.manpages.enable = true;

@@ -1,7 +1,7 @@
 { pkgs, lib, config, ... }:
 {
   services.picom = {
-    enable = false;
+    enable = config.considerate.desktop;
     package = pkgs.picom.overrideAttrs (_: {
       src = pkgs.fetchFromGitHub {
         repo = "picom";
