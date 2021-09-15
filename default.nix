@@ -23,6 +23,7 @@
     ./firefox
     ./spotify
     ./playerctld
+    ./sxiv
   ];
 
   manual.manpages.enable = true;

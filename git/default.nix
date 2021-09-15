@@ -15,7 +15,8 @@ in
         commit.verbose = true;
         push.default = "current";
         merge.tool = "fugitive";
-        diff.tool = "${pkgs.ydiff}/bin/ydiff -s";
+        alias.diff-img = "difftool -t image-diff";
+        difftool.image-diff.cmd = ''exec 10>out ; ${pkgs.imagemagick}/bin/compare $REMOTE $LOCAL png:- | ${pkgs.imagemagick}/bin/montage -geometry 400x -font Liberation-Sans -label 'reference' $LOCAL -label 'diff' - -label 'current--%f' $REMOTE /dev/fd/10; ${pkgs.sxiv}/bin/sxiv /dev/fd/10'';
         mergetool.fugitive.cmd = ''nvim -f -c "Gvdiffsplit!" "$MERGED"'';
       };
     };

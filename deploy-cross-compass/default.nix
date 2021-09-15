@@ -32,10 +32,10 @@ in
     type = lib.types.listOf lib.types.str;
     default = [
       "jarjar.xc"
-      # "chewbacca.xc"
-      "olga.xc"
+      "chewbacca.xc"
       "anakin.xc"
       "pichanaki.xc"
+      "bobafett.xc"
     ];
   };
   config = {

@@ -105,7 +105,6 @@ in
           np.sleuth
           np.surround
           np.commentary
-          np.vim-indent-object
           np.vim-polyglot
           np.vim-repeat
           np.vim-unimpaired
@@ -124,6 +123,9 @@ in
             colorscheme base16-ocean
             set background=dark
           '';
+        };
+        diffview = {
+          plugins = [ np.diffview-nvim ];
         };
         ghcid =
           let
