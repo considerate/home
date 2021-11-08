@@ -29,27 +29,16 @@ in
 {
   programs.firefox = {
     enable = true;
-    package = firefox;
-    extensions = [
-      (buildFirefoxXpiAddon {
-        pname = "passff";
-        version = "1.10.5";
-        addonId = "passff@invicem.pro";
-        url = "https://addons.mozilla.org/firefox/downloads/file/3697309/passff-1.10.5-fx.xpi";
-        sha256 = "0vbbzv7i9039qpiwp4kis90m3r6ws96sbaqnkw0qaq8d0jlbjxl0";
-        meta = { };
-      })
-    ];
-    profiles = {
-      considerate = {
-        id = 0;
-        settings = {
-          "media.ffmpeg.vaapi.enabled" = true;
-          "media.ffvpx.enabled" = false;
-          "media.av1.enabled" = false;
-          "gfx.webrender.all" = true;
-        };
-      };
-    };
+    # package = firefox;
+    # extensions = [
+    #   (buildFirefoxXpiAddon {
+    #     pname = "passff";
+    #     version = "1.10.5";
+    #     addonId = "passff@invicem.pro";
+    #     url = "https://addons.mozilla.org/firefox/downloads/file/3697309/passff-1.10.5-fx.xpi";
+    #     sha256 = "0vbbzv7i9039qpiwp4kis90m3r6ws96sbaqnkw0qaq8d0jlbjxl0";
+    #     meta = { };
+    #   })
+    # ];
   };
 }
