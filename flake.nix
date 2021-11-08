@@ -1,9 +1,10 @@
 {
   inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-21.05";
+    nixpkgs.url = "github:NixOS/nixpkgs/release-21.05";
     nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
     home-manager.url = "github:nix-community/home-manager/release-21.05";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
+    neovim.url = "github:neovim/neovim/v0.5.1?dir=contrib";
   };
   outputs = inputs:
     let
@@ -12,7 +13,7 @@
         manual.manpages.enable = true;
         imports = [
           ./base16
-          ./neovim
+          (import ./neovim inputs.neovim)
           ./ranger
           ./tmux
           ./git
