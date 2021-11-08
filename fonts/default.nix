@@ -30,8 +30,7 @@ let
     };
 in
 {
-  fonts.fontconfig.enable = config.considerate.desktop;
-  home.packages = lib.optionals config.considerate.desktop [
+  home.packages = lib.optionals config.fonts.fontconfig.enable [
     pkgs.fira-code
     pkgs.noto-fonts
     pkgs.noto-fonts-cjk
