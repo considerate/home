@@ -39,7 +39,7 @@
       };
     in
     {
-      nixosModules.considerate = configuration;
+      homeModules.considerate = configuration;
       homeConfigurations = {
         considerate = inputs.home-manager.lib.homeManagerConfiguration {
           system = "x86_64-linux";
