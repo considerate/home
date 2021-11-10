@@ -17,9 +17,13 @@ let
       machines=$@
     fi
     echo "deploying branch $branch with nixos-rebuild $command on ''${machines[@]}"
+    pids=()
     for machine in ''${machines[@]}; do
-      echo $machine
-      ssh -A "$machine" "cd /etc/nixos/cross-compass-nixos && git fetch origin $branch && git checkout -f $branch && git reset --hard origin/$branch && sudo ./nixos-rebuild.sh $command"
+      ssh -A "$machine" "cd /etc/nixos/cross-compass-nixos && git fetch origin $branch && git checkout -f $branch && git reset --hard origin/$branch && sudo nixos-rebuild $command --flake ." | sed "s/^/$machine> /" &
+      pids+=($!)
+    done
+    for pid in ''${pids[@]}; do
+      wait $pid
     done
   '';
 in
@@ -32,6 +36,7 @@ in
     type = lib.types.listOf lib.types.str;
     default = [
       "jarjar.xc"
+      "maker.xc"
       "chewbacca.xc"
       "anakin.xc"
       "pichanaki.xc"
