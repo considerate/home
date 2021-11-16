@@ -9,6 +9,7 @@ in
       log = deltaBin;
       reflog = deltaBin;
       show = deltaBin;
+      blame = deltaBin;
     };
     delta = {
       navigate = true;
