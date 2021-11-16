@@ -1,10 +1,9 @@
 { pkgs, lib, ... }:
-let
-in
 {
   home.packages = [
     pkgs.gitg
   ];
+  imports = [./delta.nix];
   programs = {
     git =
       let
