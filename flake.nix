@@ -25,7 +25,7 @@
           ./st
           ./fonts
           ./autorandr
-          ./compton
+          ./picom
           ./highdpi
           ./rofi
           ./wallpaper

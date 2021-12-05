@@ -22,9 +22,6 @@ lib.mkIf config.considerate.desktop {
       size = 48;
     };
   };
-  home.file.${config.xsession.scriptPath}.text = lib.mkAfter (lib.optionalString config.programs.autorandr.enable ''
-    autorandr -c
-  '');
   home.file = {
     xmobar-icons = {
       source = ./xmobar-icons;

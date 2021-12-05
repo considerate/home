@@ -81,9 +81,9 @@ highDPISettings = do
 main = do
   runIBus
   highDPISettings
-  xmproc <- spawnPipe "xmobar ~/.xmobarrc"
+  xmproc <- spawnPipe "xmobar"
   sessionId <- getEnv "XDG_SESSION_ID"
-  xmonad $
+  launch $
     fullscreenSupport $
       docks $
         desktopConfig
