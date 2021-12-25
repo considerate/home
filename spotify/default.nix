@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs, lib, config, ... }:
 {
-  home.packages = [ pkgs.spotify ];
+  home.packages = lib.mkIf config.considerate.desktop [ pkgs.spotify ];
 }
