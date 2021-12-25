@@ -18,7 +18,6 @@
           ./tmux
           ./git
           ./bash
-          ./emacs
           ./direnv
           ./deploy-cross-compass
           ./desktop
