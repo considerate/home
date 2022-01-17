@@ -14,7 +14,7 @@ in
     delta = {
       navigate = true;
       line-numbers = true;
-      side-by-side = true;
+      side-by-side = false;
     };
     interactive.diffFilter = "${deltaBin} --color-only --features=interactive";
   };
