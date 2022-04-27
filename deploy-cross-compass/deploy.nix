@@ -9,6 +9,10 @@ writeShellScriptBin "deploy-cross-compass" ''
   if [ -f "$key" ]; then
     ssh-add "$key"
   fi
+  user=""
+  if [ -z $DEPLOY_USER ]; then
+    user="$DEPLOY_USER@"
+  fi
   command=''${1:-switch}
   branch=''${2:-master}
   shift 2
@@ -20,7 +24,7 @@ writeShellScriptBin "deploy-cross-compass" ''
   echo "deploying branch $branch with nixos-rebuild $command on ''${machines[@]}"
   pids=()
   for machine in ''${machines[@]}; do
-    ssh -A "$machine" "cd /etc/nixos/cross-compass-nixos && git fetch origin $branch && git checkout -f $branch && git reset --hard origin/$branch && sudo nixos-rebuild $command --flake ." | sed "s/^/$machine> /" &
+    ssh -A "$user$machine" "cd /etc/nixos/cross-compass-nixos && git fetch origin $branch && git checkout -f $branch && git reset --hard origin/$branch && sudo nixos-rebuild $command --flake ." | sed "s/^/$machine> /" &
     pids+=($!)
   done
   for pid in ''${pids[@]}; do
