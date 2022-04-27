@@ -10,9 +10,10 @@ writeShellScriptBin "deploy-cross-compass" ''
     ssh-add "$key"
   fi
   user=""
-  if [ -z $DEPLOY_USER ]; then
-    user="$DEPLOY_USER@"
+  if [ -z "''${DEPLOY_USER}" ]; then
+    user="''${DEPLOY_USER}@"
   fi
+  echo "Deploying as user: $user"
   command=''${1:-switch}
   branch=''${2:-master}
   shift 2
