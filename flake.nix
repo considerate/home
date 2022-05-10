@@ -1,10 +1,10 @@
 {
   inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/release-21.05";
+    nixpkgs.url = "github:NixOS/nixpkgs/release-21.11";
     nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
-    home-manager.url = "github:nix-community/home-manager/release-21.05";
+    home-manager.url = "github:nix-community/home-manager/release-21.11";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
-    neovim.url = "github:neovim/neovim/v0.5.1?dir=contrib";
+    neovim.url = "github:neovim/neovim/v0.7.0?dir=contrib";
   };
   outputs = inputs:
     {
@@ -15,14 +15,13 @@
         tmux = import ./tmux;
         git = import ./git;
         bash = import ./bash;
-        emacs = import ./emacs;
         direnv = import ./direnv;
         deploy-cross-compass = import ./deploy-cross-compass;
         desktop = import ./desktop;
         st = import ./st;
         fonts = import ./fonts;
         autorandr = import ./autorandr;
-        compton = import ./compton;
+        picom = import ./picom;
         highdpi = import ./highdpi;
         rofi = import ./rofi;
         wallpaper = import ./wallpaper;
@@ -38,20 +37,17 @@
           imports = [
             inputs.self.homeModules.base16
             inputs.self.homeModules.neovim
-            inputs.self.homeModules.base16
-            inputs.self.homeModules.neovim
             inputs.self.homeModules.ranger
             inputs.self.homeModules.tmux
             inputs.self.homeModules.git
             inputs.self.homeModules.bash
-            inputs.self.homeModules.emacs
             inputs.self.homeModules.direnv
             inputs.self.homeModules.deploy-cross-compass
             inputs.self.homeModules.desktop
             inputs.self.homeModules.st
             inputs.self.homeModules.fonts
             inputs.self.homeModules.autorandr
-            inputs.self.homeModules.compton
+            inputs.self.homeModules.picom
             inputs.self.homeModules.highdpi
             inputs.self.homeModules.rofi
             inputs.self.homeModules.wallpaper
