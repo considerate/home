@@ -1,5 +1,6 @@
 { pkgs, ... }: {
   xresources.extraConfig = ''
-    Xft.dpi: 196
+    Xft.dpi: 220
+    xterm*faceName: xft:FiraCode Nerd Font:pixelsize=32
   '';
 }

@@ -74,13 +74,9 @@ runIBus = do
   setEnv "GLFW_IM_MODULE" "ibus"
   setEnv "GTK_IM_MODULE" "ibus"
 
-highDPISettings = do
-  setEnv "GDK_SCALE" "2"
-  setEnv "GDK_DPI_SCALE" "0.5"
-
 main = do
   runIBus
-  highDPISettings
+  spawn "set-cursor"
   xmproc <- spawnPipe "xmobar"
   sessionId <- getEnv "XDG_SESSION_ID"
   launch $

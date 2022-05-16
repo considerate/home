@@ -1,0 +1,50 @@
+diff --git a/config.def.h b/config.def.h
+index 6f05dce..5678347 100644
+--- a/config.def.h
++++ b/config.def.h
+@@ -151,9 +151,7 @@ static unsigned int rows = 24;
+ /*
+  * Default colour and shape of the mouse cursor
+  */
+-static unsigned int mouseshape = XC_xterm;
+-static unsigned int mousefg = 7;
+-static unsigned int mousebg = 0;
++static char *mouseshape = "xterm";
+ 
+ /*
+  * Color used to display font attributes when fontconfig selected a font which
+diff --git a/x.c b/x.c
+index 8bf998e..0a41915 100644
+--- a/x.c
++++ b/x.c
+@@ -14,6 +14,7 @@
+ #include <X11/keysym.h>
+ #include <X11/Xft/Xft.h>
+ #include <X11/XKBlib.h>
++#include <X11/Xcursor/Xcursor.h>
+ 
+ char *argv0;
+ #include "arg.h"
+@@ -1168,21 +1169,9 @@ xinit(int cols, int rows)
+ 	}
+ 
+ 	/* white cursor, black outline */
+-	cursor = XCreateFontCursor(xw.dpy, mouseshape);
++	cursor = XcursorLibraryLoadCursor(xw.dpy, mouseshape);
+ 	XDefineCursor(xw.dpy, xw.win, cursor);
+ 
+-	if (XParseColor(xw.dpy, xw.cmap, colorname[mousefg], &xmousefg) == 0) {
+-		xmousefg.red   = 0xffff;
+-		xmousefg.green = 0xffff;
+-		xmousefg.blue  = 0xffff;
+-	}
+-
+-	if (XParseColor(xw.dpy, xw.cmap, colorname[mousebg], &xmousebg) == 0) {
+-		xmousebg.red   = 0x0000;
+-		xmousebg.green = 0x0000;
+-		xmousebg.blue  = 0x0000;
+-	}
+-
+ 	XRecolorCursor(xw.dpy, cursor, &xmousefg, &xmousebg);
+ 
+ 	xw.xembed = XInternAtom(xw.dpy, "_XEMBED", False);

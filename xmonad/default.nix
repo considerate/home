@@ -1,20 +1,26 @@
 { config, lib, pkgs, ... }:
-let wrapXmonad = old: pkgs.runCommand "xmonad-wrapper"
-  {
-    nativeBuildInputs = [
-      pkgs.makeWrapper
-      pkgs.gnused
-    ];
-  } ''
-  makeWrapper ${old} $out --prefix PATH : ${lib.makeBinPath [
-    pkgs.brightnessctl
-    pkgs.coreutils
-    pkgs.playerctl
-    pkgs.kbdlight
-    pkgs.alsaUtils
-  ]}
-  sed -i '$s/$/ >\$HOME\/.xmonad.log 2>\$HOME\/.xmonad-errors.log/' $out
-'';
+let
+  cursorPath = "${pkgs.capitaine-cursors}/share/icons/capitaine-cursors/cursors/left_ptr";
+  set-cursor = pkgs.writeShellScriptBin "set-cursor" ''
+    ${pkgs.xorg.xsetroot}/bin/xsetroot -xcf ${cursorPath} 48
+  '';
+  wrapXmonad = old: pkgs.runCommand "xmonad-wrapper"
+    {
+      nativeBuildInputs = [
+        pkgs.makeWrapper
+        pkgs.gnused
+      ];
+    } ''
+    makeWrapper ${old} $out --prefix PATH : ${lib.makeBinPath [
+      pkgs.brightnessctl
+      pkgs.coreutils
+      pkgs.playerctl
+      pkgs.kbdlight
+      pkgs.alsaUtils
+      set-cursor
+    ]}
+    sed -i '$s/$/ >\$HOME\/.xmonad.log 2>\$HOME\/.xmonad-errors.log/' $out
+  '';
 in
 {
   options = {
@@ -40,12 +46,13 @@ in
         ];
       };
       pointerCursor = {
+        defaultCursor = "left_ptr";
         package = pkgs.capitaine-cursors;
         name = "capitaine-cursors";
-        defaultCursor = "left_ptr";
         size = 48;
       };
     };
+    home.sessionVariables = { };
     home.file = {
       ".xmonad/xmonad-${pkgs.stdenv.hostPlatform.system}" = {
         source = lib.mkForce config.xsession.windowManager.command;

@@ -4,6 +4,10 @@ let
   configFile = pkgs.writeText "config.def.h" (builtins.readFile ./config.h);
   myst = pkgs.st.overrideAttrs (old: {
     buildInputs = old.buildInputs ++ [ pkgs.harfbuzz ];
+    # the themed_cursor patch requires libXcursor to be linked
+    preBuild = (old.preBuild or "") + ''
+      makeFlagsArray+=(CFLAGS="-I${pkgs.xorg.libXcursor.dev}/include" LDFLAGS="-L${pkgs.xorg.libXcursor}/lib -lXcursor")
+    '';
     patches = old.patches ++ [
       # Scrollback
       (fetchurl {
@@ -34,6 +38,7 @@ let
       ./font.diff
       ./zoom.diff
       ./base16-ocean.diff
+      ./st-themed_cursor-0.8.4.diff
     ];
   });
 in

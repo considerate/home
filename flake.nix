@@ -9,7 +9,7 @@
   outputs = inputs:
     {
       homeModules = {
-        base16 = import ./base16;
+        colors = import ./colors;
         neovim = import ./neovim inputs.neovim;
         ranger = import ./ranger;
         tmux = import ./tmux;
@@ -31,11 +31,12 @@
         spotify = import ./spotify;
         playerctld = import ./playerctld;
         sxiv = import ./sxiv;
+        nnn = import ./nnn;
         considerate = { lib, ... }: {
           home.sessionVariables = { EDITOR = "nvim"; };
           manual.manpages.enable = true;
           imports = [
-            inputs.self.homeModules.base16
+            inputs.self.homeModules.colors
             inputs.self.homeModules.neovim
             inputs.self.homeModules.ranger
             inputs.self.homeModules.tmux
@@ -57,6 +58,7 @@
             inputs.self.homeModules.spotify
             inputs.self.homeModules.playerctld
             inputs.self.homeModules.sxiv
+            inputs.self.homeModules.nnn
           ];
         };
       };
