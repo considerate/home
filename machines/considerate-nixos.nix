@@ -31,10 +31,9 @@ inputs.nixpkgs.lib.nixosSystem {
         [ "xhci_pci" "nvme" "usb_storage" "sd_mod" "rtsx_pci_sdmmc" ];
 
       powerManagement.cpuFreqGovernor = lib.mkDefault "powersave";
-      # boot.kernelModules = [ "kvm-intel" ];
-      # boot.kernelParams = [ "mem_sleep_default=deep" ];
-      # boot.extraModulePackages = [ ];
-      # hardware.enableRedistributableFirmware = true;
+      boot.kernelModules = [ "kvm-intel" ];
+      boot.kernelParams = [ "mem_sleep_default=deep" ];
+      hardware.enableRedistributableFirmware = true;
       hardware.video.hidpi.enable = true;
       services.thermald.enable = true;
       console.font = "${pkgs.terminus_font}/share/consolefonts/ter-v32n.psf.gz";
@@ -71,7 +70,7 @@ inputs.nixpkgs.lib.nixosSystem {
     ({ pkgs, lib, ... }: {
 
       nix.registry = lib.mapAttrs (name: flake: { inherit flake; }) {
-        inherit (inputs) nixpkgs nixpkgs-unstable home-manager;
+        inherit (inputs) nixpkgs home-manager;
       };
 
       nixpkgs.config.allowUnfreePredicate = pkg: builtins.elem (lib.getName pkg) [

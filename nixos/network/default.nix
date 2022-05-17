@@ -8,7 +8,7 @@
       enable = true;
     };
     hostName = "considerate-nixos";
-    wireless = { enable = false; };
+    wireless = { enable = true; };
     useDHCP = false;
     networkmanager = {
       enable = true;
