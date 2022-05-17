@@ -9,6 +9,7 @@
       pkgs.ffmpegthumbnailer
       pkgs.sxiv
       pkgs.mediainfo
+      pkgs.autojump
     ];
     plugins = {
       src = pkgs.nnn.src + "/plugins";
