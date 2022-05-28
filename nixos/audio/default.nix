@@ -3,6 +3,6 @@
   sound.enable = true;
   hardware.pulseaudio = {
     enable = true;
-    package = pkgs.pulseaudio-hsphfpd;
+    # package = pkgs.pulseaudio-hsphfpd;
   };
 }

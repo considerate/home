@@ -10,6 +10,11 @@
       pkgs.sxiv
       pkgs.mediainfo
       pkgs.autojump
+      pkgs.bat
+      pkgs.mpv
+      pkgs.tabbed
+      pkgs.st
+      pkgs.xdotool
     ];
     plugins = {
       src = pkgs.nnn.src + "/plugins";

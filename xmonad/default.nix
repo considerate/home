@@ -45,12 +45,12 @@ in
             }))
         ];
       };
-      pointerCursor = {
-        defaultCursor = "left_ptr";
-        package = pkgs.capitaine-cursors;
-        name = "capitaine-cursors";
-        size = 48;
-      };
+    };
+    home.pointerCursor = {
+      # defaultCursor = "left_ptr";
+      package = pkgs.capitaine-cursors;
+      name = "capitaine-cursors";
+      size = 48;
     };
     home.sessionVariables = { };
     home.file = {

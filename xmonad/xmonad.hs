@@ -66,7 +66,6 @@ layoutWide = Mirror (Tall 1 (3 / 100) (3 / 5))
 
 layoutFull = Full
 
-
 layouts = avoidStruts $ gaps $ noBorders $ layoutSpiral ||| layoutTall ||| layoutWide ||| layoutFull
 
 runIBus = do
@@ -79,19 +78,22 @@ main = do
   spawn "set-cursor"
   xmproc <- spawnPipe "xmobar"
   sessionId <- getEnv "XDG_SESSION_ID"
-  launch $
-    fullscreenSupport $
-      docks $
-        desktopConfig
-          { modMask = mod4Mask,
-            layoutHook = layouts,
-            terminal = "st",
-            logHook = dynamicLogWithPP (xmobarPPConfig xmproc),
-            borderWidth = 0,
-            manageHook = manageHook desktopConfig <+> (isFullscreen --> doFullFloat),
-            handleEventHook = handleEventHook desktopConfig <+> fullscreenEventHook
-          }
-          `additionalKeys` keyBindings sessionId
+  let runner =
+        launch $
+          fullscreenSupport $
+            docks $
+              desktopConfig
+                { modMask = mod4Mask,
+                  layoutHook = layouts,
+                  terminal = "st",
+                  logHook = dynamicLogWithPP (xmobarPPConfig xmproc),
+                  borderWidth = 0,
+                  manageHook = manageHook desktopConfig <+> (isFullscreen --> doFullFloat),
+                  handleEventHook = handleEventHook desktopConfig <+> fullscreenEventHook
+                }
+                `additionalKeys` keyBindings sessionId
+  dirs <- getDirectories
+  runner dirs
 
 gaps = spacingRaw True (Border 0 0 0 0) False (Border 12 12 12 12) True
 

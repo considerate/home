@@ -163,7 +163,7 @@ in
             nn <leader>fh :Helptags<CR>
             autocmd FileType haskell let g:fzf_tags_command = 'fast-tags -R'
             au BufWritePost *.hs silent! !${pkgs.haskellPackages.fast-tags}/bin/fast-tags -R . &
-            let $FZF_DEFAULT_COMMAND = '${pkgs.ag}/bin/ag -g ""'
+            let $FZF_DEFAULT_COMMAND = '${pkgs.silver-searcher}/bin/ag -g ""'
           '';
         };
 

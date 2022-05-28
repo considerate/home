@@ -2,6 +2,9 @@ inputs:
 inputs.nixpkgs.lib.nixosSystem {
   system = "x86_64-linux";
   modules = [
+    {
+      system.stateVersion = "22.05";
+    }
     inputs.nixos-hardware.nixosModules.dell-xps-13-7390
     inputs.agenix.nixosModules.age
     inputs.home-manager.nixosModules.home-manager
@@ -72,6 +75,11 @@ inputs.nixpkgs.lib.nixosSystem {
       nix.registry = lib.mapAttrs (name: flake: { inherit flake; }) {
         inherit (inputs) nixpkgs home-manager;
       };
+      nixpkgs.config.overlays = [
+        (final: prev: {
+          nsxiv = inputs.nixpkgs-unstable.legacyPackages.${final.system}.nsxiv;
+        })
+      ];
 
       nixpkgs.config.allowUnfreePredicate = pkg: builtins.elem (lib.getName pkg) [
         "virtualbox"
