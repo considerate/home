@@ -11,6 +11,7 @@ inputs.nixpkgs.lib.nixosSystem {
     inputs.self.nixosModules.borg
     inputs.self.nixosModules.default
     ({ pkgs, ... }: {
+      programs.fish.enable = true;
       users = {
         users = {
           considerate = {
