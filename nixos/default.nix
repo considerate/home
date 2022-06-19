@@ -3,6 +3,7 @@ inputs: {
   battery = import ./battery;
   bluetooth = import ./bluetooth;
   boot = import ./boot;
+  borg = import ./borg;
   docker = import ./docker;
   git-user = import ./git-user;
   i18n = import ./i18n;

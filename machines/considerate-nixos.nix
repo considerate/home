@@ -8,6 +8,7 @@ inputs.nixpkgs.lib.nixosSystem {
     inputs.nixos-hardware.nixosModules.dell-xps-13-7390
     inputs.agenix.nixosModules.age
     inputs.home-manager.nixosModules.home-manager
+    inputs.self.nixosModules.borg
     inputs.self.nixosModules.default
     {
       users = {
