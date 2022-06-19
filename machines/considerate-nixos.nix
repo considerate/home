@@ -10,12 +10,13 @@ inputs.nixpkgs.lib.nixosSystem {
     inputs.home-manager.nixosModules.home-manager
     inputs.self.nixosModules.borg
     inputs.self.nixosModules.default
-    {
+    ({ pkgs, ... }: {
       users = {
         users = {
           considerate = {
             isNormalUser = true;
             extraGroups = [ "wheel" ];
+            shell = pkgs.fish;
           };
         };
       };
@@ -29,7 +30,7 @@ inputs.nixpkgs.lib.nixosSystem {
           };
         };
       };
-    }
+    })
     ({ pkgs, lib, ... }: {
       boot.initrd.availableKernelModules =
         [ "xhci_pci" "nvme" "usb_storage" "sd_mod" "rtsx_pci_sdmmc" ];

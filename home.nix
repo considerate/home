@@ -4,7 +4,7 @@ inputs: {
   ranger = import ./ranger;
   tmux = import ./tmux;
   git = import ./git;
-  bash = import ./bash;
+  shells = import ./shells;
   direnv = import ./direnv;
   deploy-cross-compass = import ./deploy-cross-compass;
   desktop = import ./desktop;
@@ -31,7 +31,7 @@ inputs: {
       inputs.self.homeModules.ranger
       inputs.self.homeModules.tmux
       inputs.self.homeModules.git
-      inputs.self.homeModules.bash
+      inputs.self.homeModules.shells
       inputs.self.homeModules.direnv
       inputs.self.homeModules.deploy-cross-compass
       inputs.self.homeModules.desktop
