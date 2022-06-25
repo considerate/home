@@ -19,6 +19,7 @@ in
   services.borgbackup.jobs.home-considerate = {
     paths = "/home/considerate";
     exclude = common-excludes ++ [ "Downloads" ];
+    persistentTimer = true; # run after reboot if missed
     encryption.mode = "none";
     environment.BORG_RSH = "ssh -i /home/considerate/.ssh/nas";
     repo = "ssh://considerate@192.168.11.5/mnt/storage/backup/considerate";
