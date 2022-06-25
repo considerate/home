@@ -3,6 +3,7 @@ let common-excludes = [
   ".cache"
   "*/cache2" # firefox
   "*/Cache"
+  "VirtualBox VMs"
   ".config/Slack/logs"
   ".config/Code/CachedData"
   ".container-diff"
