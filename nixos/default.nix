@@ -32,7 +32,6 @@ inputs: {
       inputs.self.nixosModules.git-user
       inputs.self.nixosModules.i18n
       inputs.self.nixosModules.locate
-      # inputs.self.nixosModules.lsix
       inputs.self.nixosModules.mullvad-openvpn
       inputs.self.nixosModules.network
       inputs.self.nixosModules.nix
