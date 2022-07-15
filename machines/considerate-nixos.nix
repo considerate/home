@@ -84,6 +84,8 @@ inputs.nixpkgs.lib.nixosSystem {
           nsxiv = inputs.nixpkgs-unstable.legacyPackages.${final.system}.nsxiv;
         })
       ];
+      services.sshd.enable = true;
+      networking.firewall.allowedTCPPorts = [ 22 ];
 
       nixpkgs.config.allowUnfreePredicate = pkg: builtins.elem (lib.getName pkg) [
         "virtualbox"
