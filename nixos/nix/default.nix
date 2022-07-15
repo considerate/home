@@ -21,14 +21,15 @@
       dates = "weekly";
       options = "--delete-older-than 30d";
     };
-    # Use nix 2.4
-    package = pkgs.nix_2_4;
+    # Pick up remote builders from /etc/nix/machines
+    distributedBuilds = true;
+    # Use nix stable (2.8 at time of writing)
+    package = pkgs.nixStable;
     extraOptions = ''
       experimental-features = flakes nix-command
       keep-outputs = true
       keep-derivations = true
     '';
-    # package = pkgs.nixUnstable;
     trustedUsers = [ "root" "considerate" ];
     binaryCachePublicKeys = [
       # considerate cachix
