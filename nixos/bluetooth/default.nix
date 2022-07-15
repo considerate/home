@@ -3,7 +3,6 @@
   services.blueman.enable = false;
   hardware.bluetooth = {
     enable = true;
-    hsphfpd.enable = true;
   };
   environment.systemPackages = [
     pkgs.blueberry
