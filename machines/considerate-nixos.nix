@@ -36,6 +36,7 @@ inputs.nixpkgs.lib.nixosSystem {
       boot.initrd.availableKernelModules =
         [ "xhci_pci" "nvme" "usb_storage" "sd_mod" "rtsx_pci_sdmmc" ];
 
+      programs.kdeconnect.enable = true;
       powerManagement.cpuFreqGovernor = lib.mkDefault "powersave";
       boot.kernelModules = [ "kvm-intel" ];
       boot.kernelParams = [ "mem_sleep_default=deep" ];
