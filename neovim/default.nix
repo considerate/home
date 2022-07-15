@@ -135,12 +135,14 @@ in
           '';
         };
 
-        escapeKeys = { config = "inoremap jj <esc>"; };
-
-        pandoc = {
-          plugins = [
-            np.vim-pandoc
-          ];
+        escapeKeys = {
+          config = ''
+            inoremap jj <esc>
+          '' +
+          # Add shortcut to set hj to escape
+          ''
+            nn <leader>hj :inoremap hj <esc><CR>
+          '';
         };
 
         git = {
