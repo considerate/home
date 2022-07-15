@@ -74,7 +74,7 @@ inputs.nixpkgs.lib.nixosSystem {
       swapDevices =
         [{ device = "/dev/disk/by-uuid/a1993cdb-2a9d-4be5-a517-1b17e8fb7554"; }];
     })
-    ({ pkgs, lib, ... }: {
+    ({ pkgs, lib, config, ... }: {
 
       nix.registry = lib.mapAttrs (name: flake: { inherit flake; }) {
         inherit (inputs) nixpkgs home-manager;
@@ -86,12 +86,13 @@ inputs.nixpkgs.lib.nixosSystem {
       ];
       services.sshd.enable = true;
       networking.firewall.allowedTCPPorts = [ 22 ];
+      age.secrets.wireguard.file = ../secrets/wireguard.age;
       networking.wg-quick.interfaces = {
         wg0 = {
           autostart = false;
-          address = [ "10.64.192.74/32" "fc00:bbbb:bbbb:bb01::1:c049/128" ];
+          address = [ "10.66.41.69/32" "fc00:bbbb:bbbb:bb01::3:2944/128" ];
           dns = [ "10.64.0.1" ];
-          privateKeyFile = "/run/secrets/wg-key";
+          privateKeyFile = config.age.secrets.wireguard.path;
 
           peers = [
             {
