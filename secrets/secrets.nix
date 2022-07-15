@@ -16,5 +16,6 @@ in
 {
   "mullvad-ca.age".publicKeys = keys;
   "mullvad-user.age".publicKeys = keys;
+  "wireguard.age".publicKeys = keys;
   "smb.age".publicKeys = keys;
 }

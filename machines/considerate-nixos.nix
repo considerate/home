@@ -86,6 +86,23 @@ inputs.nixpkgs.lib.nixosSystem {
       ];
       services.sshd.enable = true;
       networking.firewall.allowedTCPPorts = [ 22 ];
+      networking.wg-quick.interfaces = {
+        wg0 = {
+          autostart = false;
+          address = [ "10.64.192.74/32" "fc00:bbbb:bbbb:bb01::1:c049/128" ];
+          dns = [ "10.64.0.1" ];
+          privateKeyFile = "/run/secrets/wg-key";
+
+          peers = [
+            {
+              publicKey = "/iivwlyqWqxQ0BVWmJRhcXIFdJeo0WbHQ/hZwuXaN3g=";
+              allowedIPs = [ "0.0.0.0/0" "::/0" ];
+              endpoint = "193.32.127.66:51820";
+              persistentKeepalive = 25;
+            }
+          ];
+        };
+      };
 
       nixpkgs.config.allowUnfreePredicate = pkg: builtins.elem (lib.getName pkg) [
         "virtualbox"
