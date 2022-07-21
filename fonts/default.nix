@@ -35,6 +35,7 @@ in
     pkgs.noto-fonts
     pkgs.noto-fonts-cjk
     pkgs.fontconfig
+    pkgs.inter
     (pkgs.nerdfonts.override {
       fonts = [ "FiraCode" "Noto" ];
     })
