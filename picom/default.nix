@@ -6,5 +6,6 @@
     fade = true;
     fadeDelta = 4;
     inactiveDim = "0.20";
+    vSync = true;
   };
 }

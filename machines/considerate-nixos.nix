@@ -65,6 +65,7 @@ inputs.nixpkgs.lib.nixosSystem {
         pkgs.sshfs
         pkgs.hfsprogs
         pkgs.bindfs
+        pkgs.jellyfin-media-player
       ];
       fileSystems."/mnt/windows" = {
         device = "/dev/disk/by-label/windows";
