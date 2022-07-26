@@ -22,10 +22,12 @@ inputs: {
   playerctld = import ./playerctld;
   sxiv = import ./sxiv;
   nnn = import ./nnn;
+  go = import ./go;
   considerate = { lib, ... }: {
     home.sessionVariables = { EDITOR = "nvim"; };
     manual.manpages.enable = true;
     imports = [
+      inputs.self.homeModules.go
       inputs.self.homeModules.colors
       inputs.self.homeModules.neovim
       inputs.self.homeModules.ranger
