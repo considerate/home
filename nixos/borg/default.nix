@@ -1,13 +1,14 @@
 let common-excludes = [
   # Largest cache dirs
-  ".cache"
+  "*/.cache"
   "*/cache2" # firefox
+  "*/.mozilla"
   "*/Cache"
-  "VirtualBox VMs"
-  ".config/Slack/logs"
-  ".config/Code/CachedData"
-  ".container-diff"
-  ".npm/_cacache"
+  "*/VirtualBox VMs"
+  "*/.config/Slack/logs"
+  "*/.config/Code/CachedData"
+  "*/.container-diff"
+  "*/.npm/_cacache"
   "*/node_modules"
   "*/bower_components"
   "*/_build"
