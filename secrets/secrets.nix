@@ -18,4 +18,6 @@ in
   "mullvad-user.age".publicKeys = keys;
   "wireguard.age".publicKeys = keys;
   "smb.age".publicKeys = keys;
+  "xc-openvpn-config.age".publicKeys = keys;
+  "xc-openvpn-auth.age".publicKeys = keys;
 }

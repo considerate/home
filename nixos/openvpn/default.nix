@@ -29,7 +29,16 @@ in
   ];
   age.secrets.mullvad-ca.file = ../../secrets/mullvad-ca.age;
   age.secrets.mullvad-user.file = ../../secrets/mullvad-user.age;
+  age.secrets.xc-openvpn-config.file = ../../secrets/xc-openvpn-config.age;
+  age.secrets.xc-openvpn-auth.file = ../../secrets/xc-openvpn-auth.age;
   services.openvpn.servers = {
+    cross-compass-vpn = {
+      autoStart = false;
+      config = ''
+        config ${config.age.secrets.xc-openvpn-config.path}
+        auth-user-pass ${config.age.secrets.xc-openvpn-auth.path}
+      '';
+    };
     mullvad-nl = {
       config = makeConfig ''
         remote-random

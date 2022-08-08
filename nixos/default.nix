@@ -10,7 +10,7 @@ inputs: {
   lightdm = import ./lightdm;
   locate = import ./locate;
   lsix = import ./lsix;
-  mullvad-openvpn = import ./mullvad-openvpn;
+  openvpn = import ./openvpn;
   network = import ./network;
   nix = import ./nix;
   packages = import ./packages;
@@ -32,7 +32,7 @@ inputs: {
       inputs.self.nixosModules.git-user
       inputs.self.nixosModules.i18n
       inputs.self.nixosModules.locate
-      inputs.self.nixosModules.mullvad-openvpn
+      inputs.self.nixosModules.openvpn
       inputs.self.nixosModules.network
       inputs.self.nixosModules.nix
       inputs.self.nixosModules.packages
