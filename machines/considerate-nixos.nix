@@ -105,12 +105,13 @@ inputs.nixpkgs.lib.nixosSystem {
           ];
         };
       };
-      nix.buildMachines = [{
-        systems = [ "x86_64-linux" ];
-        hostName = "192.168.100.222";
-        sshUser = "viktor";
-        sshKey = "/home/considerate/.ssh/github";
-      }];
+
+      # nix.buildMachines = [{
+      #   systems = [ "x86_64-linux" ];
+      #   hostName = "192.168.100.222";
+      #   sshUser = "viktor";
+      #   sshKey = "/home/considerate/.ssh/github";
+      # }];
 
       nixpkgs.config.allowUnfreePredicate = pkg: builtins.elem (lib.getName pkg) [
         "virtualbox"
