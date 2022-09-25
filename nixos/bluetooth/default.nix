@@ -8,11 +8,14 @@
     pkgs.blueberry
     (pkgs.writeShellScriptBin "bluetooth-connected-devices"
       ''
+        prefix=""
         bluetoothctl paired-devices | cut -f2 -d' '|
         while read -r uuid; do
           info=`bluetoothctl info $uuid`;
           if echo "$info" | grep -q "Connected: yes"; then
-            echo "$info" | grep -oP "Name: \K\w+";
+            device=$(echo "$info" | grep -oP "Alias: \K.*");
+            echo -n "$prefix$device"
+            prefix=" "
           fi;
         done
       '')
