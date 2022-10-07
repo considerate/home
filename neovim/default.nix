@@ -2,6 +2,16 @@ neovim:
 { pkgs, ... }:
 let
   np = pkgs.vimPlugins;
+  nvim-repl = pkgs.vimUtils.buildVimPluginFrom2Nix {
+    pname = "nvim-repl";
+    version = "2022-03-20";
+    src = pkgs.fetchFromGitHub {
+      owner = "pappasam";
+      repo = "nvim-repl";
+      rev = "1064eb2191a28eb8fc9a142619d3844b97fd8a75";
+      sha256 = "sha256-kFd54ITyfx9pfHPOnSswZKleoGKhMCKyT/rgzQ6DQrU=";
+    };
+  };
 in
 {
   imports = [ ./vim-init.nix ];
@@ -83,6 +93,15 @@ in
           np.vim-easymotion
         ];
       modules = gh: {
+
+        repl = {
+          plugins = [ nvim-repl ];
+          config = ''
+            nnoremap <leader>r :ReplToggle<CR>
+            nmap <leader>e <Plug>ReplSendLine
+            vmap <leader>e <Plug>ReplSendVisual
+          '';
+        };
 
         colors = {
           plugins = [ np.base16-vim ];
