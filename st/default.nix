@@ -1,7 +1,6 @@
 { config, lib, pkgs, ... }:
 let
   inherit (pkgs) fetchurl;
-  configFile = pkgs.writeText "config.def.h" (builtins.readFile ./config.h);
   myst = pkgs.st.overrideAttrs (old: {
     buildInputs = old.buildInputs ++ [ pkgs.harfbuzz ];
     # the themed_cursor patch requires libXcursor to be linked
