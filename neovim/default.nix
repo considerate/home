@@ -1,4 +1,3 @@
-neovim:
 { pkgs, ... }:
 let
   np = pkgs.vimPlugins;
@@ -35,7 +34,6 @@ in
 
   programs.neovim = {
     enable = true;
-    package = neovim.packages.${pkgs.system}.neovim;
     vimAlias = false;
     viAlias = false;
     init = {

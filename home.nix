@@ -1,6 +1,6 @@
 inputs: {
   colors = import ./colors;
-  neovim = import ./neovim inputs.neovim;
+  neovim = import ./neovim;
   ranger = import ./ranger;
   tmux = import ./tmux;
   git = import ./git;
@@ -25,6 +25,7 @@ inputs: {
   go = import ./go;
   considerate = { lib, ... }: {
     home.sessionVariables = { EDITOR = "nvim"; };
+    home.stateVersion = "22.11";
     manual.manpages.enable = true;
     imports = [
       inputs.self.homeModules.go

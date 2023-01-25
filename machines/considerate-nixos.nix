@@ -49,7 +49,7 @@ inputs.nixpkgs.lib.nixosSystem {
         enable = false;
       };
       boot.binfmt.emulatedSystems = [ "aarch64-linux" ];
-      nix.maxJobs = lib.mkDefault 8;
+      nix.settings.max-jobs = lib.mkDefault 8;
 
       fileSystems."/" = {
         device = "/dev/disk/by-uuid/9d293b12-f6ed-4bda-8859-6e8deec532f5";
