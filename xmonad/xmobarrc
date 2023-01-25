@@ -1,9 +1,10 @@
 Config {
-  font = "xft:FiraCode:size=10:antialias=true,NotoSansCJKJP:size=10:antialias=true"
+  font = "FiraCode Retina 24"
+  , additionalFonts = ["NotoSansCJKJP 24"]
     , bgColor = "#181818"
     , alpha = 230
     , fgColor = "#c0c5ce"
-    , position = TopW L 100
+    , position = TopH 40
     , commands =
       [ Run Volume "default" "Master"
         [ "--template"
