@@ -12,6 +12,10 @@
       };
     };
 
+  environment.systemPackages = [
+    pkgs.nix-output-monitor
+  ];
+
   nix = {
     gc = {
       automatic = true;
