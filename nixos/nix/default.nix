@@ -12,9 +12,21 @@
       };
     };
 
-  environment.systemPackages = [
-    pkgs.nix-output-monitor
-  ];
+  environment.systemPackages =
+    let
+      nom-complete = pkgs.writeText "nom-build.fish" ''
+        complete --comand nom --arguments "(_nix)"
+      '';
+    in
+    [
+      (pkgs.nix-output-monitor.overrideAttrs (old: {
+        postInstall = old.postInstall + ''
+          cp ${nom-complete} completions.fish
+          cat completions.fish
+          installShellCompletion --fish --name nom-build.fish completions.fish
+        '';
+      }))
+    ];
 
   nix = {
     gc = {
