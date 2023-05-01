@@ -150,6 +150,7 @@ in
 
       # Octo (GitHub)
       np.telescope-nvim
+      np.nvim-web-devicons
       {
         plugin = np.octo-nvim;
         config = ''
