@@ -202,6 +202,8 @@ in
               autocmd BufWritePre * silent Neoformat
             augroup END
             let g:neoformat_enabled_haskell = ['ormolu']
+            " no formatters for python
+            let g:neoformat_enabled_python = []
           '';
         };
 
