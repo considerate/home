@@ -82,8 +82,6 @@ let
       autocmd FileType netrw nnoremap ? :help netrw-quickmap<CR>
     ''
 
-    # unicode
-    "source ${./unicode.vim}"
     # sharedClipboard
     ''
       vmap <leader>y :w! /tmp/vitmp<CR>
