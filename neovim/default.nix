@@ -100,8 +100,10 @@ let
 in
 {
   home.packages = [
-    # Fuzzy file find
+    # Nix language server
     pkgs.nil
+    # GitHub (Octo)
+    pkgs.gh
   ];
 
   imports = [ workspace-symbols ];
@@ -150,7 +152,6 @@ in
 
       # Octo (GitHub)
       np.telescope-nvim
-      np.octo-nvim
       {
         plugin = np.octo-nvim;
         config = ''
@@ -220,6 +221,7 @@ in
         config = ''
           nn <leader>ff :GFiles<CR>
           nn <leader>fa :Files<CR>
+          nn <leader>fb :Buffers<CR>
           nn <leader>fg :Ag<CR>
           nn <leader>ft :Tags<CR>
           nn <leader>fh :Helptags<CR>
