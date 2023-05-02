@@ -13,6 +13,13 @@ lsp_status.config {current_function = false, show_filename = false}
 local on_attach = function(client, bufnr)
     -- Enable completion triggered by <c-x><c-o>
     vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
+    -- Add diagnostics to locations list
+    -- https://gist.github.com/phelipetls/0aeb9f4aca9af25d9f45ee56e0c5a340?permalink_comment_id=4397599#gistcomment-4397599
+    vim.api.nvim_create_autocmd('DiagnosticChanged', {
+        callback = function(args)
+            vim.diagnostic.setloclist({open = false})
+        end
+    })
     -- Mappings.
     -- See `:help vim.lsp.*` for documentation on any of the below functions
     local bufopts = {noremap = true, silent = true, buffer = bufnr}
@@ -38,7 +45,10 @@ local cmp_capabilities = require('cmp_nvim_lsp').default_capabilities()
 
 lspconfig.hls.setup {on_attach = on_attach, capabilities = cmp_capabilities}
 lspconfig.pyright.setup {on_attach = on_attach, capabilities = cmp_capabilities}
--- lspconfig.ruff_lsp.setup {on_attach = on_attach, capabilities = cmp_capabilities}
+lspconfig.ruff_lsp.setup {
+    on_attach = on_attach,
+    capabilities = cmp_capabilities
+}
 lspconfig.nil_ls.setup {on_attach = on_attach, capabilities = cmp_capabilities}
 
 local cmp = require('cmp')
@@ -48,10 +58,6 @@ cmp.setup {
         ['<C-d>'] = cmp.mapping.scroll_docs(-4),
         ['<C-f>'] = cmp.mapping.scroll_docs(4),
         ['<C-Space>'] = cmp.mapping.complete(),
-        -- ['<CR>'] = cmp.mapping.confirm {
-        --   behavior = cmp.ConfirmBehavior.Replace,
-        --   select = true,
-        -- },
         ['<Tab>'] = cmp.mapping(function(fallback)
             if cmp.visible() then
                 cmp.select_next_item()
