@@ -89,10 +89,10 @@ inputs.nixpkgs.lib.nixosSystem {
       networking.firewall.allowedTCPPorts = [ 22 ];
       age.secrets.wireguard.file = ../secrets/wireguard.age;
       networking.wg-quick.interfaces = {
-        wg0 = {
+        ch = {
           autostart = false;
-          address = [ "10.66.41.69/32" "fc00:bbbb:bbbb:bb01::3:2944/128" ];
-          dns = [ "10.64.0.1" ];
+          address = [ "10.67.190.117/32" "fc00:bbbb:bbbb:bb01::4:be74/128" ];
+          dns = [ "193.138.218.74" ];
           privateKeyFile = config.age.secrets.wireguard.path;
 
           peers = [
@@ -104,14 +104,20 @@ inputs.nixpkgs.lib.nixosSystem {
             }
           ];
         };
-      };
+        se = {
+          autostart = false;
+          address = [ "10.67.190.117/32" "fc00:bbbb:bbbb:bb01::4:be74/128" ];
+          dns = [ "193.138.218.74" ];
+          privateKeyFile = config.age.secrets.wireguard.path;
 
-      # nix.buildMachines = [{
-      #   systems = [ "x86_64-linux" ];
-      #   hostName = "192.168.100.222";
-      #   sshUser = "viktor";
-      #   sshKey = "/home/considerate/.ssh/github";
-      # }];
+          peers = [{
+            endpoint = "185.65.135.71:51820";
+            publicKey = "4nOXEaCDYBV//nsVXk7MrnHpxLV9MbGjt+IGQY//p3k=";
+            allowedIPs = [ "0.0.0.0/0" "::/0" ];
+            persistentKeepalive = 25;
+          }];
+        };
+      };
 
       nixpkgs.config.allowUnfreePredicate = pkg: builtins.elem (lib.getName pkg) [
         "virtualbox"
