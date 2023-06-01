@@ -1,7 +1,21 @@
 { pkgs, lib }:
 let
   formatters = {
-    python = { exe = "black"; args = [ "-q" "-" ]; };
+    python =
+      let
+        ruff-format-config = pkgs.writeText "ruff.toml" ''
+          select = ["ALL"]
+          ignore = []
+
+          # Only fix formatting and style related things
+          fixable = ["E", "F", "I", "W", "ANN", "B", "Q"]
+          unfixable = [
+            "F841", # don't delete unused variables
+            "F401", # don't delete unused import
+          ]
+        '';
+      in
+      { exe = "ruff"; args = [ "check" "--fix" "--quiet" "--exit-zero" "--config" "${ruff-format-config}" "-" ]; };
     haskell = { exe = "ormolu"; stdin = false; args = [ "-i" ]; };
     cabal.exe = "${pkgs.haskellPackages.cabal-fmt}/bin/cabal-fmt";
     markdown.exe = "md-headerfmt";
