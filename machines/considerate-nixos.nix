@@ -125,6 +125,7 @@ inputs.nixpkgs.lib.nixosSystem {
         "spotify"
         "spotify-unwrapped"
         "Oracle_VM_VirtualBox_Extension_Pack"
+        "slack"
       ];
 
       hardware.opengl.enable = true;
@@ -140,6 +141,7 @@ inputs.nixpkgs.lib.nixosSystem {
         pkgs.youtube-dl
         pkgs.ffmpeg
         pkgs.vlc
+        pkgs.slack
       ];
     })
     {
