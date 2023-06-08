@@ -102,6 +102,8 @@ in
     pkgs.nil
     # GitHub (Octo)
     pkgs.gh
+    # Search
+    pkgs.ripgrep
   ];
 
   imports = [ workspace-symbols ];
@@ -133,6 +135,7 @@ in
       np.nvim-cmp
       np.cmp-buffer
       np.cmp-nvim-lsp
+      np.nvim-treesitter
       unp.lsp-status-nvim
       {
         plugin = unp.nvim-lspconfig;
