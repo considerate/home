@@ -98,12 +98,9 @@ let
 in
 {
   home.packages = [
-    # Nix language server
-    pkgs.nil
-    # GitHub (Octo)
-    pkgs.gh
     # Search
     pkgs.ripgrep
+    pkgs.fd
   ];
 
   imports = [ workspace-symbols ];
@@ -114,6 +111,18 @@ in
     vimAlias = false;
     viAlias = false;
     extraConfig = lib.concatStringsSep "\n" configs;
+    extraPackages = [
+      # Nix language server
+      pkgs.nil
+      # GitHub (Octo)
+      pkgs.gh
+      # Tree Sitter
+      pkgs.tree-sitter
+      # tree-sitter compilers
+      pkgs.gcc
+      pkgs.clang
+    ];
+
     plugins = [
       {
         plugin = np.commentary;
@@ -135,7 +144,6 @@ in
       np.nvim-cmp
       np.cmp-buffer
       np.cmp-nvim-lsp
-      np.nvim-treesitter
       unp.lsp-status-nvim
       {
         plugin = unp.nvim-lspconfig;
@@ -145,6 +153,7 @@ in
           :luafile ${./lsp.lua}
         '';
       }
+      np.nvim-treesitter.withAllGrammars
 
       {
         plugin = unp.formatter-nvim;
