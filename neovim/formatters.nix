@@ -3,7 +3,7 @@ let
   formatters = {
     python =
       let
-        fixable = [ "E" "F" "I" "W" "ANN" "B" "Q" ];
+        fixable = [ "E" "F" "I" "W" "ANN" "B" "Q" "COM" "PT" "PYI" "G010" ];
         unfixable = [
           "F841" # don't delete unused variables
           "F401" # don't delete unused import
