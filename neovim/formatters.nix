@@ -20,8 +20,8 @@ let
           (lib.concatStringsSep "," fixable)
           "--unfixable"
           (lib.concatStringsSep "," unfixable)
-          "-"
         ];
+        stdin = false;
       };
     haskell = { exe = "ormolu"; stdin = false; args = [ "-i" ]; };
     cabal.exe = "${pkgs.haskellPackages.cabal-fmt}/bin/cabal-fmt";
