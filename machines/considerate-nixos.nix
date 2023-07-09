@@ -41,7 +41,6 @@ inputs.nixpkgs.lib.nixosSystem {
       boot.kernelModules = [ "kvm-intel" ];
       boot.kernelParams = [ "mem_sleep_default=deep" ];
       hardware.enableRedistributableFirmware = true;
-      hardware.video.hidpi.enable = true;
       services.thermald.enable = true;
       console.font = "${pkgs.terminus_font}/share/consolefonts/ter-v32n.psf.gz";
       systemd.services.NetworkManager-wait-online = {
@@ -137,7 +136,7 @@ inputs.nixpkgs.lib.nixosSystem {
         "/etc/ssh/ssh_host_ed25519_key"
       ];
       environment.systemPackages = [
-        inputs.agenix.defaultPackage.x86_64-linux
+        inputs.agenix.packages.x86_64-linux.agenix
         pkgs.youtube-dl
         pkgs.ffmpeg
         pkgs.vlc

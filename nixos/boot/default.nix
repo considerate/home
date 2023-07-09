@@ -13,6 +13,6 @@
       };
     };
 
-    cleanTmpDir = true;
+    tmp.cleanOnBoot = true;
   };
 }

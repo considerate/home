@@ -4,7 +4,7 @@
   virtualisation = {
     virtualbox = {
       host = {
-        enable = true;
+        enable = false;
         # for USB support
         enableExtensionPack = true;
       };
