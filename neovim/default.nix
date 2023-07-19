@@ -89,7 +89,7 @@ let
     ''
 
     # escapeKeys
-    # Add shortcut to set hj to escape
+    # Add shortcut to set jj to escape
     ''
       inoremap jj <esc>
       nn <leader>hj :inoremap hj <esc><CR>
@@ -209,6 +209,11 @@ in
         plugin = np.fugitive;
         config = ''
           nn <leader>gs :Gstatus<CR>
+        '' +
+        # Get diff from left and right buffers in Gvdiffsplit
+        ''
+          xnoremap dh :diffget//2<CR>
+          xnoremap dl :diffget//3<CR>
         '';
       }
       {
