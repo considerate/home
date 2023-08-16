@@ -46,6 +46,10 @@ local cmp_capabilities = require('cmp_nvim_lsp').default_capabilities()
 lspconfig.hls.setup {on_attach = on_attach, capabilities = cmp_capabilities}
 lspconfig.nil_ls.setup {on_attach = on_attach, capabilities = cmp_capabilities}
 lspconfig.pyright.setup {on_attach = on_attach, capabilities = cmp_capabilities}
+lspconfig.rust_analyzer.setup {
+    on_attach = on_attach,
+    capabilities = cmp_capabilities
+}
 lspconfig.purescriptls.setup {
     on_attach = on_attach,
     capabilities = cmp_capabilities
