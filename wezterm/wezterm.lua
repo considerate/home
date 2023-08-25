@@ -12,10 +12,14 @@ local ocean = wezterm.color.get_builtin_schemes()['Ocean (base16)']
 
 config.color_scheme = 'Ocean (base16)'
 config.font = wezterm.font_with_fallback {
-    "Fira Code", {family = "DejaVu Sans Mono", scale = 1.5}
+    "Fira Code", "Noto Sans Mono CJK JP",
+    {family = "DejaVu Sans Mono", scale = 1.5}
 }
+config.use_cap_height_to_scale_fallback_fonts = true
 
+-- xmonad doesn't resize the window on font size change
 config.adjust_window_size_when_changing_font_size = false
+config.window_close_confirmation = "NeverPrompt"
 
 config.colors = {
     tab_bar = {
