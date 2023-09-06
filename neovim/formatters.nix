@@ -25,7 +25,6 @@ let
       };
     haskell = { exe = "ormolu"; stdin = false; args = [ "-i" ]; };
     cabal.exe = "${pkgs.haskellPackages.cabal-fmt}/bin/cabal-fmt";
-    markdown.exe = "md-headerfmt";
     nix.exe = "${pkgs.nixpkgs-fmt}/bin/nixpkgs-fmt";
     go.exe = "gofmt";
     sh.exe = "${pkgs.shfmt}/bin/shfmt";
