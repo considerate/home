@@ -21,6 +21,9 @@
     xclip
     nix-diff
     git-absorb
+    sd
+    fd
+    ripgrep
   ];
 
   environment.variables = { EDITOR = "nvim"; };
