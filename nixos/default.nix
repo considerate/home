@@ -9,7 +9,6 @@ inputs: {
   i18n = import ./i18n;
   lightdm = import ./lightdm;
   locate = import ./locate;
-  lsix = import ./lsix;
   openvpn = import ./openvpn;
   network = import ./network;
   nix = import ./nix;

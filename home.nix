@@ -6,7 +6,6 @@ inputs: {
   git = import ./git;
   shells = import ./shells;
   direnv = import ./direnv;
-  deploy-cross-compass = import ./deploy-cross-compass;
   desktop = import ./desktop;
   st = import ./st;
   fonts = import ./fonts;
@@ -37,7 +36,6 @@ inputs: {
       inputs.self.homeModules.git
       inputs.self.homeModules.shells
       inputs.self.homeModules.direnv
-      inputs.self.homeModules.deploy-cross-compass
       inputs.self.homeModules.desktop
       inputs.self.homeModules.st
       inputs.self.homeModules.wezterm

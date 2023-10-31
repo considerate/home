@@ -9,6 +9,7 @@ inputs.nixpkgs.lib.nixosSystem {
     inputs.agenix.nixosModules.age
     inputs.home-manager.nixosModules.home-manager
     inputs.self.nixosModules.borg
+    inputs.self.nixosModules.docker
     inputs.self.nixosModules.default
     ({ pkgs, ... }: {
       programs.fish.enable = true;
