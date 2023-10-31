@@ -18,11 +18,11 @@
   };
   qt = {
     enable = true;
-    platformTheme = "gtk";
-    # style = {
-    #   name = "Arc-Dark";
-    #   package = pkgs.arc-kde-theme;
-    # };
+    platformTheme = "qtct";
+    style = {
+      name = "adwaita-dark";
+      package = pkgs.adwaita-qt6;
+    };
   };
   xresources.extraConfig = lib.mkBefore ''
     ! Base16 Ocean
