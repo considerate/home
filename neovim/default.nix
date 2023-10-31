@@ -1,11 +1,10 @@
 inputs: { pkgs, lib, config, ... }:
 let
   np = pkgs.vimPlugins;
-  unstable = inputs.nixpkgs-unstable.legacyPackages.${pkgs.system};
-  unp = unstable.vimPlugins;
 
   workspace-symbols = {
-    home.packages = [
+    programs.neovim.extraPackages = [
+      # fzf syntax highlighting
       pkgs.bat
     ];
     programs.neovim.plugins = [
@@ -121,6 +120,8 @@ in
       # tree-sitter compilers
       pkgs.gcc
       pkgs.clang
+      # delta in fugitive and fzf
+      pkgs.delta
     ];
 
     plugins = [
@@ -144,24 +145,34 @@ in
       np.nvim-cmp
       np.cmp-buffer
       np.cmp-nvim-lsp
-      unp.lsp-status-nvim
+      np.lsp-status-nvim
+      np.lsp_signature-nvim
       {
-        plugin = unp.nvim-lspconfig;
+        plugin = np.nvim-lspconfig;
         config = ''
-          " autocmd BufEnter,CursorHold,InsertLeave <buffer> lua vim.lsp.codelens.refresh()
           " set completeopt=menu,menuone,noselect
           :luafile ${./lsp.lua}
+          " autocmd FileType haskell BufEnter,CursorHold,InsertLeave lua vim.lsp.codelens.refresh()
         '';
       }
       np.nvim-treesitter.withAllGrammars
 
       {
-        plugin = unp.formatter-nvim;
+        plugin = np.formatter-nvim;
         config = import ./formatters.nix { inherit pkgs lib; };
       }
 
       # Octo (GitHub)
-      np.telescope-nvim
+      {
+        plugin = np.telescope-nvim;
+        config = ''
+          nn <leader>ff :Telescope git_files<CR>
+          nn <leader>ff :Telescope find_files<CR>
+          nn <leader>fb :Telescope buffers<CR>
+          nn <leader>fg :Telescope live_grep<CR>
+        '';
+      }
+      np.telescope-ui-select-nvim
       np.nvim-web-devicons
       {
         plugin = np.octo-nvim;
@@ -235,10 +246,6 @@ in
       {
         plugin = np.fzf-vim;
         config = ''
-          nn <leader>ff :GFiles<CR>
-          nn <leader>fa :Files<CR>
-          nn <leader>fb :Buffers<CR>
-          nn <leader>fg :Ag<CR>
           nn <leader>ft :Tags<CR>
           nn <leader>fh :Helptags<CR>
           autocmd FileType haskell let g:fzf_tags_command = 'fast-tags -R --exclude=dist-newstye .'
