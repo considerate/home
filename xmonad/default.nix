@@ -34,6 +34,12 @@ in
     home.packages = [ pkgs.xmobar ];
     xsession = {
       enable = true;
+      profileExtra = ''
+        export GTK_IM_MODULE=ibus
+        export XMODIFIERS=@im=ibus
+        export QT_IM_MODULE=ibus
+        export XIM_PROGRAM=/run/current-system/sw/bin/ibus-daemon
+      '';
       windowManager.xmonad = {
         enable = true;
         config = ./xmonad.hs;
