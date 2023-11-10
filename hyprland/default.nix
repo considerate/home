@@ -2,7 +2,7 @@
 let
   wallpaper_random = pkgs.writeShellScriptBin "wallpaper_random" ''
     if command -v swww >/dev/null 2>&1; then
-        swww img $(find ~/Wallpapers -type f | shuf -n1) --transition-type simple
+        swww img $(find ~/Wallpapers/papes -type f | shuf -n1) --transition-type simple
     fi
   '';
 in
@@ -23,7 +23,6 @@ in
   home.packages = [
     wallpaper_random
     pkgs.kitty
-    pkgs.wofi
     pkgs.swww
     pkgs.cinnamon.nemo
   ];
@@ -33,17 +32,9 @@ in
     extraConfig = ''
       # Monitor
 
-      # Fix slow startup
-      # exec systemctl --user import-environment WAYLAND_DISPLAY XDG_CURRENT_DESKTOP
-      # exec dbus-update-activation-environment --systemd DISPLAY WAYLAND_DISPLAY XDG_CURRENT_DESKTOP
-
       # Autostart
-
-      # exec-once = hyprctl setcursor Bibata-Modern-Classic 24
-      # exec-once = dunst
-
-      exec = pkill waybar & sleep 0.5 && waybar
-      exec-once = swww init & sleep 0.5 && exec wallpaper_random
+      exec = pkill waybar; waybar
+      exec-once = swww init && exec wallpaper_random
 
       # Set en layout at startup
 
@@ -135,25 +126,23 @@ in
       $browser = firefox
       $editor = code
       $files = nemo
-      $launcher = killall rofi || rofi -no-lazy-grab -show drun -theme index
+      $launcher = killall rofi || rofi -no-lazy-grab -show drun -theme launcher
 
       bind = $mainMod, RETURN, exec, kitty
       bind = $mainMod, Q, killactive,
       bind = $mainMod SHIFT, C, killactive,
       bind = $mainMod, M, exit,
       bind = $mainMod, V, togglefloating,
-      bind = $mainMod, W, exec, wofi --show drun
-      bind = $mainMod, R, exec, rofi -show drun
-      bind = $mainMod, P, pseudo, # dwindle
-      bind = $mainMod, J, togglesplit, # dwindle
+      bind = $mainMod, W, exec, wallpaper_random # change wallpaper
+      bind = $mainMod, P, exec, $launcher
+      bind = $mainMod, D, pseudo, # dwindle
+      bind = $mainMod, SPACE, togglesplit, # dwindle
       bind = SUPER, RETURN, exec, run-as-service $term
       bind = SUPER SHIFT, E, exec, $editor
       bind = SUPER SHIFT, F, exec, $files
       bind = SUPER SHIFT, B, exec, $browser
-      bind = SUPER, D, exec, $launcher
 
       # Switch Keyboard Layouts
-      # bind = $mainMod, SPACE, exec, hyprctl switchxkblayout teclado-gamer-husky-blizzard next
 
       bind = , Print, exec, grim -g "$(slurp)" - | wl-copy
       bind = SHIFT, Print, exec, grim -g "$(slurp)"
@@ -177,6 +166,14 @@ in
       bind = $mainMod, right, movefocus, r
       bind = $mainMod, up, movefocus, u
       bind = $mainMod, down, movefocus, d
+      bind = $mainMod, h, movefocus, l
+      bind = $mainMod, l, movefocus, r
+      bind = $mainMod, j, movefocus, d
+      bind = $mainMod, k, movefocus, u
+      bind = $mainMod SHIFT, H, movewindow, l
+      bind = $mainMod SHIFT, L, movewindow, r
+      bind = $mainMod SHIFT, J, movewindow, d
+      bind = $mainMod SHIFT, K, movewindow, u
 
       # workspaces
       # binds $mainMod + [shift +] {1..10} to [move to] workspace {1..10}
