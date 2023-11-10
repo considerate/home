@@ -7,6 +7,7 @@
     nixos-hardware.url = "github:NixOS/nixos-hardware";
     agenix.url = "github:ryantm/agenix";
     agenix.inputs.nixpkgs.follows = "nixpkgs";
+    hyprland.url = "github:hyprwm/Hyprland";
   };
   outputs = inputs: {
     nixosModules = import ./nixos inputs;

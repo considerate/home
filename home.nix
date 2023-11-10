@@ -1,4 +1,10 @@
 inputs: {
+  hyprland = {
+    imports = [
+      inputs.hyprland.homeManagerModules.default
+      (import ./hyprland)
+    ];
+  };
   colors = import ./colors;
   neovim = import ./neovim inputs;
   ranger = import ./ranger;
@@ -52,6 +58,7 @@ inputs: {
       inputs.self.homeModules.playerctld
       inputs.self.homeModules.sxiv
       inputs.self.homeModules.nnn
+      inputs.self.homeModules.hyprland
     ];
   };
 }

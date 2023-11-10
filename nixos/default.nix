@@ -7,7 +7,7 @@ inputs: {
   docker = import ./docker;
   git-user = import ./git-user;
   i18n = import ./i18n;
-  lightdm = import ./lightdm;
+  display-manager = import ./display-manager;
   locate = import ./locate;
   openvpn = import ./openvpn;
   network = import ./network;
@@ -22,6 +22,7 @@ inputs: {
   virtualbox = import ./virtualbox;
   xserver = import ./xserver;
   default = {
+    networking.firewall.allowedTCPPorts = [ 8000 ];
     imports = [
       inputs.self.nixosModules.audio
       inputs.self.nixosModules.battery
@@ -43,6 +44,7 @@ inputs: {
       inputs.self.nixosModules.trackpad
       inputs.self.nixosModules.virtualbox
       inputs.self.nixosModules.xserver
+      inputs.self.nixosModules.display-manager
     ];
   };
 }

@@ -4,6 +4,9 @@
     GDK_SCALE = "2";
     GDK_DPI_SCALE = "0.5";
   };
+  # Wayland hyperland
+  programs.hyprland.enable = true;
+  programs.hyprland.xwayland.enable = true;
   fonts.fontconfig.antialias = lib.mkDefault true;
   fonts.fontconfig.subpixel = {
     rgba = lib.mkDefault "none";
@@ -16,7 +19,7 @@
       enable = true;
       user = "considerate";
     };
-    displayManager.defaultSession = "none+xmonad";
+    displayManager.defaultSession = "hyprland";
     displayManager.session = [{
       manage = "window";
       name = "xmonad";
