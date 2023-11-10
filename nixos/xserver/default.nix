@@ -12,6 +12,7 @@
     rgba = lib.mkDefault "none";
     lcdfilter = lib.mkDefault "none";
   };
+  security.pam.services.swaylock = { };
   services.xserver = {
     enable = true;
     dpi = 220;
