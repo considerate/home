@@ -42,6 +42,7 @@ let
       set tabstop=2
       let mapleader = "\<Space>"
       let maplocalleader = "\<Space>"
+      set exrc
 
       set foldmethod=indent
       set foldcolumn=0
@@ -100,6 +101,7 @@ in
     # Search
     pkgs.ripgrep
     pkgs.fd
+    pkgs.viu
   ];
 
   imports = [ workspace-symbols ];
@@ -122,6 +124,7 @@ in
       pkgs.clang
       # delta in fugitive and fzf
       pkgs.delta
+      pkgs.chafa
     ];
 
     plugins = [
@@ -147,16 +150,18 @@ in
       np.cmp-nvim-lsp
       np.lsp-status-nvim
       np.lsp_signature-nvim
+      np.lsp_lines-nvim
       {
         plugin = np.nvim-lspconfig;
         config = ''
           " set completeopt=menu,menuone,noselect
           :luafile ${./lsp.lua}
-          " autocmd FileType haskell BufEnter,CursorHold,InsertLeave lua vim.lsp.codelens.refresh()
         '';
       }
       np.nvim-treesitter.withAllGrammars
-
+      np.nvim-treesitter-context
+      np.neotest
+      np.neotest-haskell
       {
         plugin = np.formatter-nvim;
         config = import ./formatters.nix { inherit pkgs lib; };
@@ -173,7 +178,10 @@ in
         '';
       }
       np.telescope-ui-select-nvim
+      np.popup-nvim
+      np.telescope-media-files-nvim
       np.nvim-web-devicons
+      np.trouble-nvim
       {
         plugin = np.octo-nvim;
         config = ''
