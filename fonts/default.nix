@@ -1,18 +1,19 @@
 { pkgs, config, lib, ... }:
 let
   defaultFontsConf = cfg:
-    let genDefault = fonts: name:
-      lib.optionalString (fonts != [ ]) ''
-        <alias binding="same">
-          <family>${name}</family>
-          <prefer>
-          ${lib.concatStringsSep ""
-          (map (font: ''
-            <family>${font}</family>
-          '') fonts)}
-          </prefer>
-        </alias>
-      '';
+    let
+      genDefault = fonts: name:
+        lib.optionalString (fonts != [ ]) ''
+          <alias binding="same">
+            <family>${name}</family>
+            <prefer>
+            ${lib.concatStringsSep ""
+            (map (font: ''
+              <family>${font}</family>
+            '') fonts)}
+            </prefer>
+          </alias>
+        '';
     in
     pkgs.writeTextFile {
       name = "fc-52-nixos-default-fonts.conf";
@@ -37,7 +38,7 @@ in
     pkgs.fontconfig
     pkgs.inter
     (pkgs.nerdfonts.override {
-      fonts = [ "FiraCode" "Noto" ];
+      fonts = [ "FiraCode" "Noto" "NerdFontsSymbolsOnly" ];
     })
     (defaultFontsConf {
       defaultFonts = {

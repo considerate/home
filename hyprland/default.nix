@@ -1,9 +1,18 @@
-{ config, pkgs, ... }:
+{ pkgs, ... }:
+let
+  wallpaper_random = pkgs.writeShellScriptBin "wallpaper_random" ''
+    if command -v swww >/dev/null 2>&1; then
+        swww img $(find ~/Wallpapers -type f | shuf -n1) --transition-type simple
+    fi
+  '';
+in
 {
+  imports = [
+    ./waybar
+  ];
   home = {
     sessionVariables = {
       EDITOR = "nvim";
-      BROWSER = "librewolf";
       TERMINAL = "kitty";
 
       XDG_CURRENT_DESKTOP = "Hyprland";
@@ -12,17 +21,17 @@
     };
   };
   home.packages = [
+    wallpaper_random
     pkgs.kitty
     pkgs.wofi
-    pkgs.waybar
     pkgs.swww
+    pkgs.cinnamon.nemo
   ];
   wayland.windowManager.hyprland = {
     enable = true;
     systemdIntegration = true;
     extraConfig = ''
       # Monitor
-      # monitor=DP-1,1920x1080@165,auto,1
 
       # Fix slow startup
       # exec systemctl --user import-environment WAYLAND_DISPLAY XDG_CURRENT_DESKTOP
@@ -47,6 +56,8 @@
           kb_rules =
 
           follow_mouse = 1
+
+          natural_scroll = true
 
           touchpad {
               natural_scroll = true
@@ -116,37 +127,30 @@
           workspace_swipe = false
       }
 
-      # Example windowrule v1
-      # windowrule = float, ^(kitty)$
-      # Example windowrule v2
-      # windowrulev2 = float,class:^(kitty)$,title:^(kitty)$
-
-      # windowrule=float,^(kitty)$
-      # windowrule=float,^(pavucontrol)$
-      # windowrule=center,^(kitty)$
-      # windowrule=float,^(blueman-manager)$
-      # windowrule=size 600 500,^(kitty)$
-      # windowrule=size 934 525,^(mpv)$
-      # windowrule=float,^(mpv)$
-      # windowrule=center,^(mpv)$
-      # windowrule=pin,^(firefox)$
-
       $mainMod = SUPER
       bind = $mainMod, G, fullscreen,
 
+      # Variables
+      $term = kitty
+      $browser = firefox
+      $editor = code
+      $files = nemo
+      $launcher = killall rofi || rofi -no-lazy-grab -show drun -theme index
 
-      #bind = $mainMod, RETURN, exec, cool-retro-term-zsh
       bind = $mainMod, RETURN, exec, kitty
-      bind = $mainMod, B, exec, opera --no-sandbox
-      bind = $mainMod, L, exec, librewolf
       bind = $mainMod, Q, killactive,
+      bind = $mainMod SHIFT, C, killactive,
       bind = $mainMod, M, exit,
-      bind = $mainMod, F, exec, nautilus
       bind = $mainMod, V, togglefloating,
-      bind = $mainMod, w, exec, wofi --show drun
-      bind = $mainMod, R, exec, rofiWindow
+      bind = $mainMod, W, exec, wofi --show drun
+      bind = $mainMod, R, exec, rofi -show drun
       bind = $mainMod, P, pseudo, # dwindle
       bind = $mainMod, J, togglesplit, # dwindle
+      bind = SUPER, RETURN, exec, run-as-service $term
+      bind = SUPER SHIFT, E, exec, $editor
+      bind = SUPER SHIFT, F, exec, $files
+      bind = SUPER SHIFT, B, exec, $browser
+      bind = SUPER, D, exec, $launcher
 
       # Switch Keyboard Layouts
       # bind = $mainMod, SPACE, exec, hyprctl switchxkblayout teclado-gamer-husky-blizzard next
@@ -175,7 +179,7 @@
       bind = $mainMod, down, movefocus, d
 
       # workspaces
-      # binds $mod + [shift +] {1..10} to [move to] workspace {1..10}
+      # binds $mainMod + [shift +] {1..10} to [move to] workspace {1..10}
       ${builtins.concatStringsSep "\n" (builtins.genList (
           x: let
             ws = let
@@ -183,8 +187,8 @@
             in
               builtins.toString (x + 1 - (c * 10));
           in ''
-            bind = $mod, ${ws}, workspace, ${toString (x + 1)}
-            bind = $mod SHIFT, ${ws}, movetoworkspace, ${toString (x + 1)}
+            bind = $mainMod, ${ws}, workspace, ${toString (x + 1)}
+            bind = $mainMod SHIFT, ${ws}, movetoworkspace, ${toString (x + 1)}
           ''
         )
         10)}
