@@ -13,5 +13,6 @@
         createHome = true;
       };
     };
+    groups.git = { };
   };
 }

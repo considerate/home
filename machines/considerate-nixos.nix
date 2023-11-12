@@ -21,6 +21,7 @@ inputs.nixpkgs.lib.nixosSystem {
             shell = pkgs.fish;
           };
         };
+        groups.considerate = { };
       };
       home-manager = {
         useGlobalPkgs = true;
