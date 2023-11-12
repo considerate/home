@@ -174,10 +174,10 @@ in
       bind = $mainMod, l, movefocus, r
       bind = $mainMod, j, movefocus, d
       bind = $mainMod, k, movefocus, u
-      bind = $mainMod SHIFT, H, movewindow, l
-      bind = $mainMod SHIFT, L, movewindow, r
-      bind = $mainMod SHIFT, J, movewindow, d
-      bind = $mainMod SHIFT, K, movewindow, u
+      bind = $mainMod SHIFT, H, swapwindow, l
+      bind = $mainMod SHIFT, L, swapwindow, r
+      bind = $mainMod SHIFT, J, swapwindow, d
+      bind = $mainMod SHIFT, K, swapwindow, u
 
       # workspaces
       # binds $mainMod + [shift +] {1..10} to [move to] workspace {1..10}

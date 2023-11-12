@@ -5,10 +5,10 @@
     settings = {
       mainBar = {
         "layer" = "top";
-        "modules-left" = [ "custom/arch" "hyprland/workspaces" ];
+        "modules-left" = [ "custom/nixos" "hyprland/workspaces" ];
         "modules-center" = [ "clock" ];
         "modules-right" = [ "backlight" "pulseaudio" "bluetooth" "network" "battery" ];
-        "custom/arch" = {
+        "custom/nixos" = {
           "format" = " ";
           "tooltip" = false;
           "on-click" = "rofi-powermenu";
@@ -57,8 +57,11 @@
         };
         "battery" = {
           "format" = "<span color='#b4befe'>{icon}</span> {capacity}%";
-          "format-icons" = [ "" "" "" "" "" ];
-          "format-charging" = "<span color='#b4befe'></span> {capacity}%";
+          "format-icons" = {
+            default = [ " " " " " " " " " " ];
+            charging = [ "󰢟 " "󱊤 " "󱊥 " "󱊦 " "󰂅 " ];
+          };
+          "format-charging" = "<span color='#b4befe'>{icon}</span> {capacity}%";
           "tooltip" = false;
         };
       };
