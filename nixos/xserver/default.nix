@@ -13,9 +13,11 @@
     lcdfilter = lib.mkDefault "none";
   };
   security.pam.services.swaylock = { };
+  services.gnome.gnome-keyring.enable = lib.mkForce true;
   services.xserver = {
     enable = true;
     dpi = 220;
+    desktopManager.gnome.enable = true;
     displayManager.autoLogin = {
       enable = true;
       user = "considerate";

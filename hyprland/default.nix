@@ -2,7 +2,7 @@
 let
   wallpaper_random = pkgs.writeShellScriptBin "wallpaper_random" ''
     if command -v swww >/dev/null 2>&1; then
-        swww img $(find ~/Wallpapers/papes -type f | shuf -n1) --transition-type simple
+        swww img "$(find ~/Wallpapers/papes -type f | shuf -n1)" --transition-type simple
     fi
   '';
 in
@@ -34,7 +34,11 @@ in
 
       # Autostart
       exec = pkill waybar; waybar
-      exec-once = swww init && exec wallpaper_random
+      exec-once = swww init; wallpaper_random
+      misc {
+        # See https://wiki.hyprland.org/Configuring/Variables/ for more
+        force_default_wallpaper = 0 # Set to 0 to disable the default wallpaper
+      }
 
       # Set en layout at startup
 
@@ -62,8 +66,8 @@ in
           gaps_in = 5
           gaps_out = 20
           border_size = 2
-          col.active_border = rgba(33ccffee) rgba(00ff99ee) 45deg
-          col.inactive_border = rgba(595959aa)
+          col.active_border = rgb(b4befe)
+          col.inactive_border = rgb(11111b)
 
           layout = dwindle
 
