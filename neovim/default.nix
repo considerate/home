@@ -82,12 +82,6 @@ let
       autocmd FileType netrw nnoremap ? :help netrw-quickmap<CR>
     ''
 
-    # sharedClipboard
-    ''
-      vmap <leader>y :w! /tmp/vitmp<CR>
-      nmap <leader>p :r! cat /tmp/vitmp<CR>
-    ''
-
     # escapeKeys
     # Add shortcut to set jj to escape
     ''
@@ -160,7 +154,12 @@ in
       }
       np.nvim-treesitter.withAllGrammars
       np.nvim-treesitter-context
-      np.neotest
+      {
+        plugin = np.neotest;
+        config = ''
+          luafile ${./neotest.lua}
+        '';
+      }
       np.neotest-haskell
       {
         plugin = np.formatter-nvim;
@@ -175,13 +174,26 @@ in
           nn <leader>ff :Telescope find_files<CR>
           nn <leader>fb :Telescope buffers<CR>
           nn <leader>fg :Telescope live_grep<CR>
+          luafile ${./telescope.lua}
         '';
       }
       np.telescope-ui-select-nvim
       np.popup-nvim
       np.telescope-media-files-nvim
       np.nvim-web-devicons
-      np.trouble-nvim
+      {
+        plugin = np.trouble-nvim;
+        config = ''
+          luafile ${./trouble.lua}
+        '';
+      }
+      # REPL
+      {
+        plugin = np.iron-nvim;
+        config = ''
+          luafile ${./repl.lua}
+        '';
+      }
       {
         plugin = np.octo-nvim;
         config = ''
@@ -194,34 +206,20 @@ in
 
       # Colors
       {
-        plugin = np.base16-vim;
+        plugin = np.nvim-base16;
         config = ''
           set termguicolors
-          colorscheme base16-ocean
           set background=dark
+          colorscheme base16-ocean
         '';
       }
+      np.nvim-dap
       {
-        plugin = np.vim-airline-themes;
+        plugin = np.lualine-nvim;
         config = ''
-          let g:airline_theme='base16_ocean'
+          require('lualine').setup()
         '';
-      }
-      # Airline
-      {
-        plugin = np.vim-airline;
-        config = ''
-          let g:airline_powerline_fonts = 1
-
-          function! LspStatus() abort
-            let status = luaeval("require('lsp-status').status()")
-            return trim(status)
-          endfunction
-          call airline#parts#define_function('lsp_status', 'LspStatus')
-          call airline#parts#define_condition('lsp_status', 'luaeval("#vim.lsp.buf_get_clients() > 0")')
-          let g:airline#extensions#nvimlsp#enabled = 0
-          let g:airline_section_warning = airline#section#create_right(['lsp_status'])
-        '';
+        type = "lua";
       }
       # Git
       {
@@ -260,6 +258,13 @@ in
           au BufWritePost *.hs silent! !${pkgs.haskellPackages.fast-tags}/bin/fast-tags -R --exclude=dist-newstyle . &
           let $FZF_DEFAULT_COMMAND = 'ag -g ""'
         '';
+      }
+      {
+        plugin = np.which-key-nvim;
+        config = ''
+          require("which-key").setup()
+        '';
+        type = "lua";
       }
     ];
   };
