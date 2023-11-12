@@ -9,7 +9,7 @@
         "modules-center" = [ "clock" ];
         "modules-right" = [ "backlight" "pulseaudio" "bluetooth" "network" "battery" ];
         "custom/nixos" = {
-          "format" = "";
+          "format" = " ";
           "tooltip" = false;
           "on-click" = "rofi-powermenu";
         };
