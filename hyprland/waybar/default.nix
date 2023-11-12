@@ -5,11 +5,11 @@
     settings = {
       mainBar = {
         "layer" = "top";
-        "modules-left" = [ "custom/nixos" "hyprland/workspaces" ];
+        "modules-left" = [ "custom/nixos" "cpu" "memory" "hyprland/workspaces" ];
         "modules-center" = [ "clock" ];
         "modules-right" = [ "backlight" "pulseaudio" "bluetooth" "network" "battery" ];
         "custom/nixos" = {
-          "format" = " ";
+          "format" = "";
           "tooltip" = false;
           "on-click" = "rofi-powermenu";
         };
@@ -49,11 +49,19 @@
         };
         "network" = {
           "interface" = "wlp2s0";
+          "interval" = 2;
           "format" = "{ifname}";
-          "format-wifi" = "<span color='#b4befe'> </span>{essid}";
-          "format-ethernet" = "{ipaddr}/{cidr}";
+          "format-wifi" = "<span color='#b4befe'> </span>{essid} {bandwidthDownBytes:>}  {bandwidthUpBytes:>}  ";
+          "format-ethernet" = "{ipaddr}/{cidr} {bandwidthDownBytes:>}  {bandwidthUpBytes:>}  ";
           "format-disconnected" = "<span color='#b4befe'>󰖪 </span>No Network";
           "tooltip" = false;
+        };
+        "cpu" = {
+          "format" = "{usage}%  ";
+          "tooltip" = false;
+        };
+        "memory" = {
+          "format" = "{}%  ";
         };
         "battery" = {
           "format" = "<span color='#b4befe'>{icon}</span> {capacity}%";

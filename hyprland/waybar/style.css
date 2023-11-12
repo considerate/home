@@ -10,7 +10,7 @@ window#waybar {
   background: transparent;
 }
 
-#custom-arch, #workspaces {
+#custom-nixos, #workspaces {
   border-radius: 10px;
   background-color: #11111b;
   color: #b4befe;
@@ -21,7 +21,7 @@ window#waybar {
   padding-right: 10px;
 }
 
-#custom-arch {
+#custom-nixos {
   font-size: 20px;
   margin-left: 15px;
   color: #b4befe;
@@ -32,7 +32,7 @@ window#waybar {
   color: #b4befe;
 }
 
-#clock, #backlight, #pulseaudio, #bluetooth, #network, #battery{
+#clock, #backlight, #pulseaudio, #bluetooth, #network, #battery, #cpu, #memory {
   border-radius: 10px;
   background-color: #11111b;
   color: #cdd6f4;
@@ -42,14 +42,14 @@ window#waybar {
   margin-right: 15px;
 }
 
-#backlight, #bluetooth {
+#backlight, #bluetooth, #cpu {
   border-top-right-radius: 0;
   border-bottom-right-radius: 0;
   padding-right: 5px;
   margin-right: 0
 }
 
-#pulseaudio, #network {
+#pulseaudio, #network, #memory {
   border-top-left-radius: 0;
   border-bottom-left-radius: 0;
   padding-left: 5px;
