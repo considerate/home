@@ -152,14 +152,18 @@ in
       bind = SHIFT, Print, exec, grim -g "$(slurp)"
 
       # Functional keybinds
-      bind =,XF86AudioMicMute,exec,pamixer --default-source -t
-      bind =,XF86MonBrightnessDown,exec,light -U 20
-      bind =,XF86MonBrightnessUp,exec,light -A 20
-      bind =,XF86AudioMute,exec,pamixer -t
-      bind =,XF86AudioLowerVolume,exec,pamixer -d 10
-      bind =,XF86AudioRaiseVolume,exec,pamixer -i 10
-      bind =,XF86AudioPlay,exec,playerctl play-pause
-      bind =,XF86AudioPause,exec,playerctl play-pause
+      bind =,XF86MonBrightnessDown,exec,brightnessctl set 5%-
+      bind =,XF86MonBrightnessUp,exec,brightnessctl set 5%+
+      bind =,XF86AudioMute,exec,amixer sset Master toggle
+      bind =,XF86AudioLowerVolume,exec,amixer sset Master 5%-
+      bind =,XF86AudioRaiseVolume,exec,amixer sset Master 5%+
+      bind =,XF86AudioPlay,exec,playerctl play
+      bind =,XF86AudioPrev,exec,playerctl previous
+      bind =,XF86AudioNext,exec,playerctl next
+      bind =,XF86AudioStop,exec,playerctl stop
+      bind =,XF86AudioPause,exec,playerctl pause
+      bind =,XF86KbdBrightnessUp,exec,kbdlight up
+      bind =,XF86KbdBrightnessDown,exec,kbdlight down
 
       # to switch between windows in a floating workspace
       bind = SUPER,Tab,cyclenext,
