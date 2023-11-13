@@ -26,6 +26,22 @@ in
     pkgs.swww
     pkgs.cinnamon.nemo
   ];
+  services.dunst = {
+    enable = true;
+    settings = {
+      global = {
+        origin = "top-right";
+        offset = "22x22";
+        frame_width = 2;
+        frame_color = "#b4befe";
+        separator_color = "frame";
+        font = "Fira Code 10";
+        corner_radius = 7;
+        background = "#11111B";
+        foreground = "#CDD6F4";
+      };
+    };
+  };
   wayland.windowManager.hyprland = {
     enable = true;
     systemdIntegration = true;
