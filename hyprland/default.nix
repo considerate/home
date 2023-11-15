@@ -19,13 +19,19 @@ in
       XDG_SESSION_DESKTOP = "Hyprland";
       XDG_SESSION_TYPE = "wayland";
     };
+    packages = [
+      wallpaper_random
+      pkgs.kitty
+      pkgs.swww
+      pkgs.cinnamon.nemo
+    ];
+    file = {
+      kitty = {
+        source = ./kitty.conf;
+        target = ".config/kitty/kitty.conf";
+      };
+    };
   };
-  home.packages = [
-    wallpaper_random
-    pkgs.kitty
-    pkgs.swww
-    pkgs.cinnamon.nemo
-  ];
   services.dunst = {
     enable = true;
     settings = {
