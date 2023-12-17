@@ -50,7 +50,7 @@ in
   };
   wayland.windowManager.hyprland = {
     enable = true;
-    systemdIntegration = true;
+    systemd.enable = true;
     extraConfig =
       let
         input-method = osConfig.i18n.inputMethod.enabled;
