@@ -87,7 +87,7 @@ inputs.nixpkgs.lib.nixosSystem {
         })
       ];
       services.sshd.enable = true;
-      networking.firewall.allowedTCPPorts = [ 22 ];
+      networking.firewall.allowedTCPPorts = [ 22 3000 ];
       age.secrets.wireguard.file = ../secrets/wireguard.age;
       networking.wg-quick.interfaces = {
         ch = {

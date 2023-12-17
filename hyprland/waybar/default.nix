@@ -24,6 +24,7 @@
         };
         "clock" = {
           "format" = "<span color='#b4befe'> </span>{:%H:%M}";
+          "tooltip-format" = "{:%A %Y-%m-%d}";
         };
         "backlight" = {
           "device" = "intel_backlight";
