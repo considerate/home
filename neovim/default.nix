@@ -155,13 +155,6 @@ in
       np.nvim-treesitter.withAllGrammars
       np.nvim-treesitter-context
       {
-        plugin = np.neotest;
-        config = ''
-          luafile ${./neotest.lua}
-        '';
-      }
-      np.neotest-haskell
-      {
         plugin = np.formatter-nvim;
         config = import ./formatters.nix { inherit pkgs lib; };
       }
