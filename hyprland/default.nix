@@ -69,7 +69,6 @@ in
         exec = pkill waybar; waybar
         exec-once = swww init; wallpaper_random
         env = GLFW_IM_MODULE,${im}
-        env = GTK_IM_MODULE,${im}
         env = XMODIFIERS,@im=${im}
         env = QT_IM_MODULE,${im}
         env = XIM_PROGRAM,${xim-program}
