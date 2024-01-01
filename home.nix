@@ -6,7 +6,7 @@ inputs: {
     ];
   };
   colors = import ./colors;
-  neovim = import ./neovim inputs;
+  neovim = import ./neovim;
   ranger = import ./ranger;
   tmux = import ./tmux;
   git = import ./git;
