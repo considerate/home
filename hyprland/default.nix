@@ -48,204 +48,201 @@ in
       };
     };
   };
-  wayland.windowManager.hyprland = {
-    enable = true;
-    systemd.enable = true;
-    extraConfig =
-      let
-        input-method = osConfig.i18n.inputMethod.enabled;
-        xim-program = "${osConfig.i18n.inputMethod.package}/bin/${input-method}";
-        start-input-methods = {
-          fcitx5 = "${xim-program} -D";
-          ibus = "${osConfig.i18n.inputMethod.package}/bin/ibus-daemon";
-        };
-        start-input-method = start-input-methods.${input-method};
-        im = if input-method == "fcitx5" then "fcitx" else input-method;
-      in
-      ''
-        # Monitor
-
-        # Autostart
-        exec = pkill waybar; waybar
-        exec-once = swww init; wallpaper_random
-        env = GLFW_IM_MODULE,${im}
-        env = XMODIFIERS,@im=${im}
-        env = QT_IM_MODULE,${im}
-        env = XIM_PROGRAM,${xim-program}
-        exec-once = ${start-input-method}
-        misc {
+  wayland.windowManager.hyprland =
+    let
+      input-method = osConfig.i18n.inputMethod.enabled;
+      xim-program = "${osConfig.i18n.inputMethod.package}/bin/${input-method}";
+      start-input-methods = {
+        fcitx5 = "${xim-program} -D";
+        ibus = "${osConfig.i18n.inputMethod.package}/bin/ibus-daemon";
+      };
+      start-input-method = start-input-methods.${input-method};
+      im = if input-method == "fcitx5" then "fcitx" else input-method;
+    in
+    {
+      enable = true;
+      systemd.enable = true;
+      settings = {
+        "$mod" = "SUPER";
+        exec = [
+          "pkill waybar; waybar"
+        ];
+        exec-once = [
+          "swww init; wallpaper_random"
+          "${start-input-method}"
+        ];
+        env = [
+          "GLFW_IM_MODULE,${im}"
+          "XMODIFIERS,@im=${im}"
+          "QT_IM_MODULE,${im}"
+          "XIM_PROGRAM,${xim-program}"
+        ];
+        misc.force_default_wallpaper = 0;
+        decoration = {
           # See https://wiki.hyprland.org/Configuring/Variables/ for more
-          force_default_wallpaper = 0 # Set to 0 to disable the default wallpaper
-        }
 
-        # Set en layout at startup
+          rounding = 10;
 
+          blur = {
+            enabled = true;
+            size = 3;
+            passes = 1;
+
+            vibrancy = 0.1696;
+          };
+          drop_shadow = true;
+          shadow_range = 4;
+          shadow_render_power = 3;
+          "col.shadow" = "rgba(1a1a1aee)";
+        };
+        general = {
+          gaps_in = 5;
+          gaps_out = 20;
+          border_size = 2;
+          "col.active_border" = "rgb(b4befe)";
+          "col.inactive_border" = "rgb(11111b)";
+
+          layout = "dwindle";
+
+          allow_tearing = false;
+        };
         # Input config
-        input {
-            kb_layout = us
-            kb_variant =
-            kb_model =
-            kb_options =
-            kb_rules =
+        input = {
+          kb_layout = "us";
 
-            follow_mouse = 1
+          follow_mouse = 1;
 
-            natural_scroll = true
+          natural_scroll = true;
 
-            touchpad {
-                natural_scroll = true
-            }
+          touchpad = {
+            natural_scroll = true;
+          };
 
-            sensitivity = 0 # -1.0 - 1.0, 0 means no modification.
-        }
+          sensitivity = 0;
+        };
+        animations = {
+          enabled = true;
 
-        general {
+          bezier = "myBezier, 0.05, 0.9, 0.1, 1.05";
 
-            gaps_in = 5
-            gaps_out = 20
-            border_size = 2
-            col.active_border = rgb(b4befe)
-            col.inactive_border = rgb(11111b)
+          animation = [
+            "windows, 1, 7, myBezier"
+            "windowsOut, 1, 7, default, popin 80%"
+            "border, 1, 10, default"
+            "borderangle, 1, 8, default"
+            "fade, 1, 7, default"
+            "workspaces, 1, 6, default"
+          ];
+        };
+        dwindle = {
+          pseudotile = true;
+          preserve_split = true;
+        };
 
-            layout = dwindle
+        master = {
+          new_is_master = true;
+        };
 
-            allow_tearing = false
-        }
-
-
-        decoration {
-            # See https://wiki.hyprland.org/Configuring/Variables/ for more
-
-            rounding = 10
-
-            blur {
-                enabled = true
-                size = 3
-                passes = 1
-
-                vibrancy = 0.1696
-            }
-
-            drop_shadow = true
-            shadow_range = 4
-            shadow_render_power = 3
-            col.shadow = rgba(1a1a1aee)
-        }
-
-        animations {
-            enabled = true
-
-            # Some default animations, see https://wiki.hyprland.org/Configuring/Animations/ for more
-
-            bezier = myBezier, 0.05, 0.9, 0.1, 1.05
-
-            animation = windows, 1, 7, myBezier
-            animation = windowsOut, 1, 7, default, popin 80%
-            animation = border, 1, 10, default
-            animation = borderangle, 1, 8, default
-            animation = fade, 1, 7, default
-            animation = workspaces, 1, 6, default
-        }
-
-        dwindle {
-            pseudotile = yes
-            preserve_split = yes
-        }
-
-        master {
-            new_is_master = yes
-        }
-
-        gestures {
-            workspace_swipe = false
-        }
-
-        $mainMod = SUPER
-        bind = $mainMod, G, fullscreen,
-
-        # Variables
-        $term = kitty
-        $browser = firefox
-        $editor = code
-        $files = nemo
-        $launcher = killall rofi || rofi -no-lazy-grab -show drun -theme launcher
-
-        bind = $mainMod, RETURN, exec, kitty
-        bind = $mainMod, Q, killactive,
-        bind = $mainMod SHIFT, C, killactive,
-        bind = $mainMod SHIFT, P, exec, ${pkgs.sway-contrib.grimshot}/bin/grimshot save area "/home/considerate/screenshots/screenshot-$(date +%Y-%m-%dT%H%M%S).png"
-        bind = $mainMod, M, exit,
-        bind = $mainMod, V, togglefloating,
-        bind = $mainMod, W, exec, wallpaper_random # change wallpaper
-        bind = $mainMod, P, exec, $launcher
-        bind = $mainMod, D, pseudo, # dwindle
-        bind = $mainMod, SPACE, togglesplit,
-        bind = SUPER, RETURN, exec, run-as-service $term
-        bind = SUPER SHIFT, E, exec, $editor
-        bind = SUPER SHIFT, F, exec, $files
-        bind = SUPER SHIFT, B, exec, $browser
-
-        bind = , Print, exec, grim -g "$(slurp)" - | wl-copy
-        bind = SHIFT, Print, exec, grim -g "$(slurp)"
-
-        # Functional keybinds
-        bind =,XF86MonBrightnessDown,exec,brightnessctl set 5%-
-        bind =,XF86MonBrightnessUp,exec,brightnessctl set 5%+
-        bind =,XF86AudioMute,exec,amixer sset Master toggle
-        bind =,XF86AudioLowerVolume,exec,amixer sset Master 5%-
-        bind =,XF86AudioRaiseVolume,exec,amixer sset Master 5%+
-        bind =,XF86AudioPlay,exec,playerctl play
-        bind =,XF86AudioPrev,exec,playerctl previous
-        bind =,XF86AudioNext,exec,playerctl next
-        bind =,XF86AudioStop,exec,playerctl stop
-        bind =,XF86AudioPause,exec,playerctl pause
-        bind =,XF86KbdBrightnessUp,exec,kbdlight up
-        bind =,XF86KbdBrightnessDown,exec,kbdlight down
+        gestures = {
+          workspace_swipe = false;
+        };
 
         # to switch between windows in a floating workspace
-        bind = SUPER,Tab,cyclenext,
-        bind = SUPER,Tab,bringactivetotop,
-
-        # Move focus with mainMod + arrow keys
-        bind = $mainMod, left, movefocus, l
-        bind = $mainMod, right, movefocus, r
-        bind = $mainMod, up, movefocus, u
-        bind = $mainMod, down, movefocus, d
-        bind = $mainMod, h, movefocus, l
-        bind = $mainMod, l, movefocus, r
-        bind = $mainMod, j, movefocus, d
-        bind = $mainMod, k, movefocus, u
-        bind = $mainMod SHIFT, H, swapwindow, l
-        bind = $mainMod SHIFT, L, swapwindow, r
-        bind = $mainMod SHIFT, J, swapwindow, d
-        bind = $mainMod SHIFT, K, swapwindow, u
-
-        # workspaces
-        # binds $mainMod + [shift +] {1..10} to [move to] workspace {1..10}
-        ${builtins.concatStringsSep "\n" (builtins.genList (
-            x: let
-              ws = let
-                c = (x + 1) / 10;
+        bind =
+          let
+            namedWorkspace = x:
+              let
+                ws =
+                  let
+                    c = (x + 1) / 10;
+                  in
+                  builtins.toString (x + 1 - (c * 10));
               in
-                builtins.toString (x + 1 - (c * 10));
-            in ''
-              bind = $mainMod, ${ws}, workspace, ${toString (x + 1)}
-              bind = $mainMod SHIFT, ${ws}, movetoworkspace, ${toString (x + 1)}
-            ''
-          )
-          10)}
+              { inherit ws x; };
+            namedWorkspaces = builtins.genList
+              namedWorkspace
+              10;
+            # workspaces
+            # binds $mod + [shift +] {1..10} to [move to] workspace {1..10}
+            workspaceBinds = builtins.concatLists
+              (builtins.map
+                ({ ws, x }:
+                  [
+                    "$mod, ${ws}, workspace, ${toString (x + 1)}"
+                    "$mod SHIFT, ${ws}, movetoworkspace, ${toString (x + 1)}"
+                  ])
+                namedWorkspaces);
+          in
 
-        # Example special workspace (scratchpad)
-        bind = $mainMod, S, togglespecialworkspace, magic
-        bind = $mainMod SHIFT, S, movetoworkspace, special:magic
+          [
+            "$mod,Tab,cyclenext,"
+            "$mod,Tab,bringactivetotop,"
 
-        # Scroll through existing workspaces with mainMod + scroll
-        bind = $mainMod, mouse_down, workspace, e+1
-        bind = $mainMod, mouse_up, workspace, e-1
+            # Move focus with mod + arrow keys
+            "$mod, left, movefocus, l"
+            "$mod, right, movefocus, r"
+            "$mod, up, movefocus, u"
+            "$mod, down, movefocus, d"
+            "$mod, h, movefocus, l"
+            "$mod, l, movefocus, r"
+            "$mod, j, movefocus, d"
+            "$mod, k, movefocus, u"
+            "$mod SHIFT, H, swapwindow, l"
+            "$mod SHIFT, L, swapwindow, r"
+            "$mod SHIFT, J, swapwindow, d"
+            "$mod SHIFT, K, swapwindow, u"
+            # Example special workspace (scratchpad)
+            "$mod, S, togglespecialworkspace, magic"
+            "$mod SHIFT, S, movetoworkspace, special:magic"
 
-        # Move/resize windows with mainMod + LMB/RMB and dragging
-        bindm = $mainMod, mouse:272, movewindow
-        bindm = $mainMod, mouse:273, resizewindow
-      '';
-  };
+            # Scroll through existing workspaces with mod + scroll
+            "$mod, mouse_down, workspace, e+1"
+            "$mod, mouse_up, workspace, e-1"
+
+          ] ++ workspaceBinds
+          ++
+          # Program triggers
+          [
+            ''$mod, G, fullscreen,''
+            ''$mod, RETURN, exec, kitty''
+            ''$mod, Q, killactive,''
+            ''$mod SHIFT, Q, exec, systemctl suspend''
+            ''$mod SHIFT, C, killactive,''
+            ''$mod SHIFT, P, exec, ${pkgs.sway-contrib.grimshot}/bin/grimshot save area "/home/considerate/screenshots/screenshot-$(date +%Y-%m-%dT%H%M%S).png"''
+            ''$mod, M, exit,''
+            ''$mod, V, togglefloating,''
+            ''$mod, W, exec, wallpaper_random # change wallpaper''
+            ''$mod, P, exec, killall rofi || rofi -no-lazy-grab -show drun -theme launcher''
+            ''$mod, D, pseudo, # dwindle''
+            ''$mod, SPACE, togglesplit,''
+            ''$mod, RETURN, exec, run-as-service kitty''
+            ''$mod SHIFT, B, exec, firefox''
+            ''$mod SHIFT, F, exec, nemo''
+            '', Print, exec, grim -g "$(slurp)" - | wl-copy''
+            ''$mod, Print, exec, grim -g "$(slurp)"''
+          ]
+          ++
+          # Function keys
+          [
+            ",XF86MonBrightnessDown,exec,brightnessctl set 5%-"
+            ",XF86MonBrightnessUp,exec,brightnessctl set 5%+"
+            ",XF86AudioMute,exec,amixer sset Master toggle"
+            ",XF86AudioLowerVolume,exec,amixer sset Master 5%-"
+            ",XF86AudioRaiseVolume,exec,amixer sset Master 5%+"
+            ",XF86AudioPlay,exec,playerctl play"
+            ",XF86AudioPrev,exec,playerctl previous"
+            ",XF86AudioNext,exec,playerctl next"
+            ",XF86AudioStop,exec,playerctl stop"
+            ",XF86AudioPause,exec,playerctl pause"
+            ",XF86KbdBrightnessUp,exec,kbdlight up"
+            ",XF86KbdBrightnessDown,exec,kbdlight down"
+          ]
+        ;
+        # Move/resize windows with mod + LMB/RMB and dragging
+        bindm = [
+          "$mod, mouse:272, movewindow"
+          "$mod, mouse:273, resizewindow"
+        ];
+      };
+    };
 }
