@@ -226,11 +226,13 @@ let
   };
 
   lang-haskell.programs.neovim = {
+
     plugins = [ np.nvim-treesitter-parsers.haskell ];
-    formatters = {
-      haskell = { exe = "ormolu"; args = [ "--no-cabal" ]; };
-      cabal.exe = "${pkgs.haskellPackages.cabal-fmt.bin}/bin/cabal-fmt";
-    };
+    formatters =
+      {
+        haskell = { exe = "ormolu"; args = [ "--no-cabal" ]; };
+        cabal.exe = "${pkgs.haskellPackages.cabal-fmt.bin}/bin/cabal-fmt";
+      };
     extraLspConfig = ''
       lspconfig.hls.setup({})
     '';
@@ -257,14 +259,35 @@ let
     '';
   };
 
-  lang-python.programs.neovim = {
-    plugins = [ np.nvim-treesitter-parsers.python ];
-    formatters.python = { exe = "${pkgs.black}/bin/black"; args = [ "-q" "-" ]; };
-    extraLspConfig = ''
-      lspconfig.pyright.setup({})
-      lspconfig.ruff_lsp.setup({})
-    '';
-  };
+  lang-python.programs.neovim =
+    let
+      fixable = [ "E" "F" "I" "W" "ANN" "B" "Q" "COM" "PT" "PYI" "G010" ];
+      unfixable = [
+        "F841" # don't delete unused variables
+        "F401" # don't delete unused import
+      ];
+    in
+    {
+      plugins = [ np.nvim-treesitter-parsers.python ];
+      formatters.python = {
+        exe = "ruff";
+        args = [
+          "check"
+          "--fix"
+          "--quiet"
+          "--exit-zero"
+          "--fixable"
+          (lib.concatStringsSep "," fixable)
+          "--unfixable"
+          (lib.concatStringsSep "," unfixable)
+        ];
+        stdin = false;
+      };
+      extraLspConfig = ''
+        lspconfig.pyright.setup({})
+        lspconfig.ruff_lsp.setup({})
+      '';
+    };
 
   lang-rust.programs.neovim = {
     plugins = [ np.nvim-treesitter-parsers.rust ];
@@ -488,6 +511,9 @@ in
           vim.keymap.set("n", "<leader>xl", function() trbl.toggle("loclist") end, {desc = "Trouble, loclist"})
           vim.keymap.set("n", "gR", function() trbl.toggle("lsp_references") end, {desc = "Trouble lsp_references"})
         '';
+      }
+      {
+        plugin = np.markdown-preview-nvim;
       }
     ];
   };
