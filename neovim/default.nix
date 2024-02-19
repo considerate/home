@@ -273,6 +273,7 @@ let
         exe = "ruff";
         args = [
           "check"
+          "--preview"
           "--fix"
           "--quiet"
           "--exit-zero"
