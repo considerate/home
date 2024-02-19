@@ -361,7 +361,50 @@ let
   ];
 
   debugging.programs.neovim.plugins = [
-    np.nvim-dap
+    {
+      plugin = np.nvim-dap;
+      type = "lua";
+      config = ''
+        vim.api.nvim_set_keymap('n', '<F5>', ':DapContinue<CR>', { silent = true })
+        vim.api.nvim_set_keymap('n', '<F10>', ':DapStepOver<CR>', { silent = true })
+        vim.api.nvim_set_keymap('n', '<F11>', ':DapStepInto<CR>', { silent = true })
+        vim.api.nvim_set_keymap('n', '<F12>', ':DapStepOut<CR>', { silent = true })
+        vim.api.nvim_set_keymap('n', '<leader>b', ':DapToggleBreakpoint<CR>', { silent = true })
+        vim.api.nvim_set_keymap('n', '<leader>B', ':lua require("dap").set_breakpoint(nil, nil, vim.fn.input("Breakpoint condition: "))<CR>', { silent = true })
+        vim.api.nvim_set_keymap('n', '<leader>lp', ':lua require("dap").set_breakpoint(nil, nil, vim.fn.input("Log point message: "))<CR>', { silent = true })
+        vim.api.nvim_set_keymap('n', '<leader>dr', ':lua require("dap").repl.open()<CR>', { silent = true })
+        vim.api.nvim_set_keymap('n', '<leader>dl', ':lua require("dap").run_last()<CR>', { silent = true })
+      '';
+    }
+    {
+      plugin = np.nvim-dap-ui;
+      type = "lua";
+      config = ''
+        require("dapui").setup()
+        vim.api.nvim_set_keymap('n', '<leader>d', ':lua require("dapui").toggle()<CR>', {})
+      '';
+    }
+    {
+      plugin = np.nvim-dap-python;
+      type = "lua";
+      config = ''
+        require('dap-python').setup("python")
+        local dap = require("dap")
+        dap.adapters.python = {
+          type = 'executable',
+          command = 'python',
+          args = { '-m', 'debugpy.adapter' },
+        }
+        table.insert(dap.configurations.python, {
+          type = 'python';
+          request = 'launch';
+          name = 'Launch module';
+          module = function()
+            return vim.fn.input('Module: ')
+          end;
+        })
+      '';
+    }
   ];
 
   workspace-symbols = {
