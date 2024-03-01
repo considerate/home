@@ -5,39 +5,34 @@
 
 {
   imports =
-    [
-      (modulesPath + "/installer/scan/not-detected.nix")
+    [ (modulesPath + "/installer/scan/not-detected.nix")
     ];
 
-  boot.initrd.availableKernelModules = [ "xhci_pci" "ahci" "nvme" "usbhid" "sd_mod" "sr_mod" ];
+  boot.initrd.availableKernelModules = [ "xhci_pci" "ahci" "nvme" "usb_storage" "usbhid" "sd_mod" "sr_mod" ];
   boot.initrd.kernelModules = [ ];
   boot.kernelModules = [ "kvm-intel" ];
   boot.extraModulePackages = [ ];
 
-  fileSystems."/" = {
-    device = "/dev/disk/by-uuid/e8b0a76a-ce1a-4684-be89-b94de78eaae0";
-    fsType = "btrfs";
-    options = [ "subvol=root" "compress=zstd" ];
-  };
+  fileSystems."/" =
+    { device = "/dev/disk/by-uuid/559f0ca7-db2c-4244-8796-45319e2fd631";
+      fsType = "btrfs";
+      options = [ "subvol=@" ];
+    };
 
-  fileSystems."/home" = {
-    device = "/dev/disk/by-uuid/e8b0a76a-ce1a-4684-be89-b94de78eaae0";
-    fsType = "btrfs";
-    options = [ "subvol=home" "compress=zstd" ];
-  };
+  fileSystems."/boot" =
+    { device = "/dev/disk/by-uuid/A0F1-720C";
+      fsType = "vfat";
+    };
 
-  fileSystems."/nix" = {
-    device = "/dev/disk/by-uuid/e8b0a76a-ce1a-4684-be89-b94de78eaae0";
-    fsType = "btrfs";
-    options = [ "subvol=nix" "compress=zstd" ];
-  };
+  swapDevices = [ ];
 
-  fileSystems."/boot" = {
-    device = "/dev/disk/by-uuid/5492-91CF";
-    fsType = "vfat";
-  };
+  # Enables DHCP on each ethernet and wireless interface. In case of scripted networking
+  # (the default) this is the recommended approach. When using systemd-networkd it's
+  # still possible to use this option, but it's recommended to use it in conjunction
+  # with explicit per-interface declarations with `networking.interfaces.<interface>.useDHCP`.
+  networking.useDHCP = lib.mkDefault true;
+  # networking.interfaces.enp4s0.useDHCP = lib.mkDefault true;
 
-  swapDevices = [{ device = "/dev/disk/by-uuid/82c7eaae-d109-43dd-bbc0-249e00c59032"; }];
-
-  powerManagement.cpuFreqGovernor = lib.mkDefault "performance";
+  nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
+  hardware.cpu.intel.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
 }
