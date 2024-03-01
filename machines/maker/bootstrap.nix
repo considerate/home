@@ -4,6 +4,7 @@ inputs.nixpkgs.lib.nixosSystem {
   modules = [
     ./configuration.nix
     ./hardware-configuration.nix
+    inputs.agenix.nixosModules.age
     inputs.home-manager.nixosModules.home-manager
     inputs.self.nixosModules.battery
     inputs.self.nixosModules.boot
@@ -19,6 +20,17 @@ inputs.nixpkgs.lib.nixosSystem {
     inputs.self.nixosModules.trackpad
     inputs.self.nixosModules.xserver
     inputs.self.nixosModules.display-manager
+    {
+      age.identityPaths = [
+        "/etc/ssh/ssh_host_rsa_key"
+        "/etc/ssh/ssh_host_ed25519_key"
+      ];
+    }
+    ({ lib, ... }: {
+      nix.registry = lib.mapAttrs (name: flake: { inherit flake; }) {
+        inherit (inputs) nixpkgs home-manager;
+      };
+    })
     ({ pkgs, ... }: {
       programs.fish.enable = true;
       users = {
@@ -56,7 +68,7 @@ inputs.nixpkgs.lib.nixosSystem {
       };
     }
     {
-    	programs.hyprland.enable = true;
+      programs.hyprland.enable = true;
     }
     {
       location = {

@@ -208,7 +208,7 @@ in
             ''$mod, Q, killactive,''
             ''$mod SHIFT, Q, exec, systemctl suspend''
             ''$mod SHIFT, C, killactive,''
-            ''$mod SHIFT, P, exec, ${pkgs.sway-contrib.grimshot}/bin/grimshot save area "/home/considerate/screenshots/screenshot-$(date +%Y-%m-%dT%H%M%S).png"''
+            ''$mod SHIFT, P, exec, ${pkgs.sway-contrib.grimshot}/bin/grimshot save area "~/screenshots/screenshot-$(date +%Y-%m-%dT%H%M%S).png"''
             ''$mod, M, exit,''
             ''$mod, V, togglefloating,''
             ''$mod, W, exec, wallpaper_random # change wallpaper''
