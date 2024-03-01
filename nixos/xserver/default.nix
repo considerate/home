@@ -20,7 +20,7 @@
     desktopManager.gnome.enable = true;
     displayManager.autoLogin = {
       enable = true;
-      user = "considerate";
+      user = lib.mkDefault "considerate";
     };
     displayManager.defaultSession = "hyprland";
     displayManager.session = [{
