@@ -47,10 +47,35 @@ inputs.nixpkgs.lib.nixosSystem {
         useGlobalPkgs = true;
         useUserPackages = true;
         users = {
-          viktor = {
-            imports = [ inputs.self.homeModules.considerate ];
-            considerate.desktop = true;
-          };
+          viktor =
+            let
+              hyprland-maker = {
+                wayland.windowManager.hyprland.settings = {
+                  # change monitor to high resolution, the last argument is the scale factor
+                  xwayland.force_zero_scaling = true;
+                  monitor = ",highres,auto,2";
+                  env =
+                    [
+                      "GDK_SCALE,2"
+                      "XCURSOR_SIZE,32"
+                      "LIBVA_DRIVER_NAME,nvidia"
+                      "XDG_SESSION_TYPE,wayland"
+                      "GBM_BACKEND,nvidia-drm"
+                      "__GLX_VENDOR_LIBRARY_NAME,nvidia"
+                      "WLR_NO_HARDWARE_CURSORS,1"
+                      "XDG_CURRENT_DESKTOP,Hyprland"
+                      "XDG_SESSION_DESKTOP,Hyprland"
+                    ];
+                };
+              };
+            in
+            {
+              imports = [
+                hyprland-maker
+                inputs.self.homeModules.considerate
+              ];
+              considerate.desktop = true;
+            };
         };
       };
     })
