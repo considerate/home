@@ -3,42 +3,42 @@ inputs.nixpkgs.lib.nixosSystem {
   system = "x86_64-linux";
   modules = [
     {
-      system.stateVersion = "22.05";
+      system.stateVersion = "24.05";
     }
     ./hardware-configuration.nix
     inputs.agenix.nixosModules.age
     inputs.home-manager.nixosModules.home-manager
-    inputs.self.nixosModules.borg
-    inputs.self.nixosModules.docker
-    inputs.self.nixosModules.default
-    ({ pkgs, ... }: {
-      programs.fish.enable = true;
-      users = {
-        users = {
-          considerate = {
-            isNormalUser = true;
-            extraGroups = [ "wheel" ];
-            shell = pkgs.fish;
-          };
-        };
-        groups.considerate = { };
+    #inputs.self.nixosModules.battery
+    #inputs.self.nixosModules.boot
+    #inputs.self.nixosModules.i18n
+    #inputs.self.nixosModules.network
+    #inputs.self.nixosModules.nix
+    #inputs.self.nixosModules.packages
+    #inputs.self.nixosModules.passwords
+    #inputs.self.nixosModules.powerline
+    #inputs.self.nixosModules.redshift
+    #inputs.self.nixosModules.ssh
+    #inputs.self.nixosModules.tex
+    #inputs.self.nixosModules.trackpad
+    #inputs.self.nixosModules.xserver
+    #inputs.self.nixosModules.display-manager
+    {
+      boot.loader.systemd-boot.enable = true;
+    }
+    {
+      networking = {
+        hostName = "maker";
+        domain = "xc";
+        defaultGateway = "192.168.1.1";
+        networkmanager.enable = true;
+        firewall.allowedUDPPortRanges = [
+          { from = 50000; to = 60000; } # UE multi-user-server
+        ];
+        firewall.allowedTCPPorts = [ 3000 3200 5000 8080 6006 6007 6008 3389 5900 5901 5902 ];
+        firewall.allowedUDPPorts = [ 5568 5569 ];
       };
-      home-manager = {
-        useGlobalPkgs = true;
-        useUserPackages = true;
-        users = {
-          considerate = {
-            imports = [ inputs.self.homeModules.considerate ];
-            considerate.desktop = true;
-          };
-        };
-      };
-    })
+    }
     ({ pkgs, lib, ... }: {
-      boot.initrd.availableKernelModules = [ "xhci_pci" "nvme" "usb_storage" "sd_mod" "rtsx_pci_sdmmc" ];
-
-      boot.kernelModules = [ "kvm-intel" ];
-      boot.kernelParams = [ "mem_sleep_default=deep" ];
       hardware.enableRedistributableFirmware = true;
       services.thermald.enable = true;
       console.font = "${pkgs.terminus_font}/share/consolefonts/ter-v32n.psf.gz";
@@ -69,14 +69,11 @@ inputs.nixpkgs.lib.nixosSystem {
       ];
       services.sshd.enable = true;
       networking.firewall.allowedTCPPorts = [ 22 3000 ];
-      age.secrets.wireguard.file = ../secrets/wireguard.age;
 
       nixpkgs.config.allowUnfreePredicate = pkg: builtins.elem (lib.getName pkg) [
         "intel-ocl"
         "spotify"
         "spotify-unwrapped"
-        "Oracle_VM_VirtualBox_Extension_Pack"
-        "slack"
       ];
 
       hardware.opengl.enable = true;
@@ -92,7 +89,6 @@ inputs.nixpkgs.lib.nixosSystem {
         pkgs.youtube-dl
         pkgs.ffmpeg
         pkgs.vlc
-        pkgs.slack
       ];
     })
     {

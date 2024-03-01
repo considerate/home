@@ -1,7 +1,7 @@
 inputs: {
   hyprland = {
     imports = [
-      inputs.hyprland.homeManagerModules.default
+      # inputs.hyprland.homeManagerModules.default
       (import ./hyprland)
     ];
   };
@@ -20,7 +20,6 @@ inputs: {
   rofi = import ./rofi;
   wallpaper = import ./wallpaper;
   xmonad = import ./xmonad;
-  chromium = import ./chromium;
   firefox = import ./firefox;
   spotify = import ./spotify;
   playerctld = import ./playerctld;
@@ -32,7 +31,6 @@ inputs: {
     home.stateVersion = "22.11";
     manual.manpages.enable = true;
     imports = [
-      inputs.self.homeModules.go
       inputs.self.homeModules.colors
       inputs.self.homeModules.neovim
       inputs.self.homeModules.ranger
@@ -43,13 +41,9 @@ inputs: {
       inputs.self.homeModules.desktop
       inputs.self.homeModules.fonts
       inputs.self.homeModules.autorandr
-      inputs.self.homeModules.picom
       inputs.self.homeModules.highdpi
       inputs.self.homeModules.rofi
       inputs.self.homeModules.wallpaper
-      inputs.self.homeModules.xmonad
-      inputs.self.homeModules.chromium
-      inputs.self.homeModules.firefox
       inputs.self.homeModules.spotify
       inputs.self.homeModules.playerctld
       inputs.self.homeModules.sxiv

@@ -45,6 +45,7 @@ inputs.nixpkgs.lib.nixosSystem {
       hardware.enableRedistributableFirmware = true;
       services.thermald.enable = true;
       console.font = "${pkgs.terminus_font}/share/consolefonts/ter-v32n.psf.gz";
+      networking.hostName = "considerate-nixos";
       systemd.services.NetworkManager-wait-online = {
         wantedBy = [ "network-online.target" ];
         enable = false;

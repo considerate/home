@@ -28,11 +28,9 @@ inputs: {
       inputs.self.nixosModules.battery
       inputs.self.nixosModules.bluetooth
       inputs.self.nixosModules.boot
-      inputs.self.nixosModules.docker
       inputs.self.nixosModules.git-user
       inputs.self.nixosModules.i18n
       inputs.self.nixosModules.locate
-      inputs.self.nixosModules.openvpn
       inputs.self.nixosModules.network
       inputs.self.nixosModules.nix
       inputs.self.nixosModules.packages
@@ -42,7 +40,6 @@ inputs: {
       inputs.self.nixosModules.ssh
       inputs.self.nixosModules.tex
       inputs.self.nixosModules.trackpad
-      inputs.self.nixosModules.virtualbox
       inputs.self.nixosModules.xserver
       inputs.self.nixosModules.display-manager
     ];

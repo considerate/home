@@ -16,13 +16,14 @@
         system = "x86_64-linux";
         homeDirectory = "/home/considerate";
         username = "considerate";
-        stateVersion = "22.05";
+        stateVersion = "23.11";
         configuration = inputs.self.homeModules.considerate;
       };
     };
     nixosConfigurations = {
       considerate-nixos = import machines/considerate-nixos.nix inputs;
-      maker = import machines/maker.nix inputs;
+      maker = import machines/maker inputs;
+      bootstrap = import machines/maker/bootstrap.nix inputs;
     };
   };
 }
