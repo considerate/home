@@ -15,7 +15,6 @@ inputs.nixpkgs.lib.nixosSystem {
     inputs.self.nixosModules.passwords
     inputs.self.nixosModules.powerline
     inputs.self.nixosModules.redshift
-    inputs.self.nixosModules.ssh
     inputs.self.nixosModules.tex
     inputs.self.nixosModules.trackpad
     inputs.self.nixosModules.xserver
@@ -31,7 +30,7 @@ inputs.nixpkgs.lib.nixosSystem {
         inherit (inputs) nixpkgs home-manager;
       };
     })
-    ({ pkgs, ... }: {
+    ({ pkgs, lib, ... }: {
       programs.fish.enable = true;
       users = {
         users = {
@@ -68,9 +67,13 @@ inputs.nixpkgs.lib.nixosSystem {
                     ];
                 };
               };
+              no-picom = {
+                services.picom.enable = lib.mkForce false;
+              };
             in
             {
               imports = [
+                no-picom
                 hyprland-maker
                 inputs.self.homeModules.considerate
               ];
