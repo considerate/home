@@ -22,6 +22,7 @@
     };
     nixosConfigurations = {
       considerate-nixos = import machines/considerate-nixos.nix inputs;
+      maker = import machines/maker.nix inputs;
     };
   };
 }
