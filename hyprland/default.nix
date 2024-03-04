@@ -21,6 +21,7 @@ in
     };
     packages = [
       wallpaper_random
+      pkgs.wl-clipboard
       pkgs.kitty
       pkgs.swww
       pkgs.cinnamon.nemo
