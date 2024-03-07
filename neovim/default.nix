@@ -279,17 +279,10 @@ let
     {
       plugins = [ np.nvim-treesitter-parsers.python ];
       formatters.python = {
-        exe = "ruff";
+        exe = "${pkgs.ruff}/bin/ruff";
         args = [
-          "check"
+          "format"
           "--preview"
-          "--fix"
-          "--quiet"
-          "--exit-zero"
-          "--fixable"
-          (lib.concatStringsSep "," fixable)
-          "--unfixable"
-          (lib.concatStringsSep "," unfixable)
         ];
         stdin = false;
       };
