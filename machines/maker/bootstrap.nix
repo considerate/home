@@ -70,11 +70,15 @@ inputs.nixpkgs.lib.nixosSystem {
               no-picom = {
                 services.picom.enable = lib.mkForce false;
               };
+              nix-index = {
+                programs.nix-index.enable = true;
+              };
             in
             {
               imports = [
                 no-picom
                 hyprland-maker
+                nix-index
                 inputs.self.homeModules.considerate
               ];
               considerate.desktop = true;
