@@ -279,10 +279,9 @@ let
     {
       plugins = [ np.nvim-treesitter-parsers.python ];
       formatters.python = {
-        exe = "${pkgs.ruff}/bin/ruff";
+        exe = "ruff";
         args = [
           "format"
-          "--preview"
         ];
         stdin = false;
       };
