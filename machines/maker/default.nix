@@ -20,7 +20,15 @@ inputs.nixpkgs.lib.nixosSystem {
     inputs.self.nixosModules.xserver
     inputs.self.nixosModules.display-manager
     {
-      services.xserver.videoDrivers = [ "nvidia" ];
+      services.xserver.videoDrivers = [
+        "nvidia"
+        "nvidia_modeset"
+        "nvidia_uvm"
+        "nvidia_drm"
+      ];
+      boot.kernelParams = [ "nvidia.NVReg_PreserveVideoMemoryAllocations=1" "nvidia_drm.modeset=1" "ibt=off" ];
+      hardware.nvidia.powerManagement.enable = true;
+      hardware.nvidia.open = false;
     }
     {
       age.identityPaths = [

@@ -23,13 +23,5 @@
       user = lib.mkDefault "considerate";
     };
     displayManager.defaultSession = "hyprland";
-    displayManager.session = [{
-      manage = "window";
-      name = "xmonad";
-      start = ''
-        ${pkgs.runtimeShell} $HOME/.xsession &
-        waitPID=$!
-      '';
-    }];
   };
 }
