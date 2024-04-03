@@ -225,6 +225,16 @@ let
     }];
   };
 
+
+  lang-cpp.programs.neovim = {
+    extraPackages = [ pkgs.ccls ];
+    plugins = [ np.nvim-treesitter-parsers.cpp ];
+    formatters.cpp.exe = "${pkgs.clang-tools}/bin/clang-format";
+    extraLspConfig = ''
+      lspconfig.ccls.setup({})
+    '';
+  };
+
   lang-haskell.programs.neovim = {
 
     plugins = [ np.nvim-treesitter-parsers.haskell ];
@@ -270,16 +280,24 @@ let
 
   lang-python.programs.neovim =
     let
-      fixable = [ "E" "F" "I" "W" "ANN" "B" "Q" "COM" "PT" "PYI" "G010" ];
+      fixable = [ "E" "F" "I" "W" "D" "N" "ANN" "B" "Q" "COM" "PT" "PYI" "G010" ];
       unfixable = [
-        "F841" # don't delete unused variables
         "F401" # don't delete unused import
+        "F841" # don't delete unused variables
       ];
+      ruff-wrapper = pkgs.writeShellScript "ruff-format" ''
+        ruff format "$@"
+        ruff check --fix-only \
+          --fixable ${lib.concatStringsSep "," fixable} \
+          --unfixable ${lib.concatStringsSep "," unfixable} \
+          --exit-zero \
+          "$@"
+      '';
     in
     {
       plugins = [ np.nvim-treesitter-parsers.python ];
       formatters.python = {
-        exe = "ruff";
+        exe = "${ruff-wrapper}";
         args = [
           "format"
         ];
