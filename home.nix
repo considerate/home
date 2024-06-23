@@ -25,11 +25,23 @@ inputs: {
   sxiv = import ./sxiv;
   nnn = import ./nnn;
   go = import ./go;
+  vscode = { pkgs, ... }: {
+    programs.vscode = {
+      enable = true;
+      extensions = with pkgs.vscode-extensions; [
+        dracula-theme.theme-dracula
+        vscodevim.vim
+        yzhang.markdown-all-in-one
+      ];
+    };
+  };
   considerate = { lib, ... }: {
     home.sessionVariables = { EDITOR = "nvim"; };
     home.stateVersion = "22.11";
     manual.manpages.enable = true;
     imports = [
+      inputs.self.homeModules.vscode
+      inputs.self.homeModules.go
       inputs.self.homeModules.colors
       inputs.self.homeModules.neovim
       inputs.self.homeModules.ranger

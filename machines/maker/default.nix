@@ -6,7 +6,9 @@ inputs.nixpkgs.lib.nixosSystem {
     ./hardware-configuration.nix
     inputs.agenix.nixosModules.age
     inputs.home-manager.nixosModules.home-manager
+    inputs.self.nixosModules.tabby
     inputs.self.nixosModules.battery
+    inputs.self.nixosModules.docker
     inputs.self.nixosModules.boot
     inputs.self.nixosModules.i18n
     inputs.self.nixosModules.network
@@ -19,6 +21,29 @@ inputs.nixpkgs.lib.nixosSystem {
     inputs.self.nixosModules.trackpad
     inputs.self.nixosModules.xserver
     inputs.self.nixosModules.display-manager
+    ({ pkgs, ... }: {
+      programs.nix-ld.enable = true;
+      programs.nix-ld.libraries = with pkgs; [
+        stdenv.cc.cc
+        zlib
+        fuse3
+        icu
+        zlib
+        nss
+        openssl
+        curl
+        expat
+      ];
+    })
+    ({ pkgs, ... }: {
+      services.flatpak.enable = true;
+      # xdg.portal.extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
+      xdg.portal.config.common.default = "gtk";
+    })
+    {
+      nix.settings.trusted-users = [ "root" "@wheel" ];
+      users.users.viktor.extraGroups = [ "docker" ];
+    }
     {
       services.xserver.videoDrivers = [
         "nvidia"

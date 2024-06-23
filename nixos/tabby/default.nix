@@ -1,0 +1,3 @@
+{
+  services.tabby.enable = true;
+}

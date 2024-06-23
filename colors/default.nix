@@ -18,10 +18,10 @@
   };
   qt = {
     enable = true;
-    platformTheme = "qtct";
+    platformTheme = "gnome";
     style = {
       name = "adwaita-dark";
-      package = pkgs.adwaita-qt6;
+      package = [ pkgs.adwaita-qt pkgs.adwaita-qt6 ];
     };
   };
   xresources.extraConfig = lib.mkBefore ''

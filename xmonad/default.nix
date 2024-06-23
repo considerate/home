@@ -30,7 +30,6 @@ in
     };
   };
   config = lib.mkIf config.considerate.desktop {
-    gtk.enable = true;
     home.packages = [ pkgs.xmobar ];
     xsession = {
       enable = true;

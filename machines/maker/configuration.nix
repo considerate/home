@@ -11,14 +11,27 @@
       ./hardware-configuration.nix
     ];
 
+  virtualisation.libvirtd.enable = true;
+  virtualisation.libvirtd.allowedBridges = [ "br0" "virbr0" ];
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
-  networking.hostName = "maker";
+  networking = {
 
-  # Enable networking
-  networking.networkmanager.enable = true;
+    hostName = "maker";
+
+    # Enable networking
+    networkmanager.enable = true;
+    bridges = {
+      br0 = {
+        interfaces = [ "enp4s0" ];
+      };
+      virbr0 = {
+        interfaces = [ "enp4s0" ];
+      };
+    };
+  };
 
   # Set your time zone.
   time.timeZone = "Asia/Tokyo";
@@ -76,8 +89,8 @@
   };
 
   # Enable automatic login for the user.
-  services.xserver.displayManager.autoLogin.enable = true;
-  services.xserver.displayManager.autoLogin.user = "viktor";
+  services.displayManager.autoLogin.enable = true;
+  services.displayManager.autoLogin.user = "viktor";
 
   # Workaround for GNOME autologin: https://github.com/NixOS/nixpkgs/issues/103746#issuecomment-945091229
   systemd.services."getty@tty1".enable = false;

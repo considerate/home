@@ -67,6 +67,8 @@ let
               },
             },
           }
+          vim.opt.foldmethod = "expr"
+          vim.opt.foldexpr = "nvim_treesitter#foldexpr()"
         '';
       }
     ];
@@ -226,14 +228,31 @@ let
   };
 
 
-  lang-cpp.programs.neovim = {
-    extraPackages = [ pkgs.ccls ];
-    plugins = [ np.nvim-treesitter-parsers.cpp ];
-    formatters.cpp.exe = "${pkgs.clang-tools}/bin/clang-format";
-    extraLspConfig = ''
-      lspconfig.ccls.setup({})
-    '';
-  };
+  lang-cpp.programs.neovim =
+    let codelldb = pkgs.vscode-extensions.vadimcn.vscode-lldb;
+    in
+    {
+      extraPackages = [ pkgs.ccls ];
+      plugins = [ np.nvim-treesitter-parsers.cpp ];
+      formatters.cpp.exe = "${pkgs.clang-tools}/bin/clang-format";
+      extraLspConfig = ''
+        lspconfig.ccls.setup({})
+        lspconfig.clangd.setup{}
+      '';
+      extraLuaConfig = ''
+        local dap = require("dap")
+        local codelldb_bin = "${codelldb}/share/vscode/extensions/vadimcn.vscode-lldb/adapter/codelldb"
+        local codelldb_lib = "${codelldb}/share/vscode/extensions/vadimcn.vscode-lldb/lldb/lib/liblldb.so"
+        dap.adapters.codelldb = {
+          type = "server",
+          port = "''${port}",
+          executable = {
+            command = codelldb_bin,
+            args = {"--liblldb", codelldb_lib, "--port", "''${port}"},
+          },
+        }
+      '';
+    };
 
   lang-haskell.programs.neovim = {
 
@@ -385,24 +404,59 @@ let
       plugin = np.nvim-dap;
       type = "lua";
       config = ''
-        vim.api.nvim_set_keymap('n', '<F5>', ':DapContinue<CR>', { silent = true })
-        vim.api.nvim_set_keymap('n', '<F10>', ':DapStepOver<CR>', { silent = true })
-        vim.api.nvim_set_keymap('n', '<F11>', ':DapStepInto<CR>', { silent = true })
-        vim.api.nvim_set_keymap('n', '<F12>', ':DapStepOut<CR>', { silent = true })
-        vim.api.nvim_set_keymap('n', '<leader>b', ':DapToggleBreakpoint<CR>', { silent = true })
-        vim.api.nvim_set_keymap('n', '<leader>B', ':lua require("dap").set_breakpoint(nil, nil, vim.fn.input("Breakpoint condition: "))<CR>', { silent = true })
-        vim.api.nvim_set_keymap('n', '<leader>lp', ':lua require("dap").set_breakpoint(nil, nil, vim.fn.input("Log point message: "))<CR>', { silent = true })
-        vim.api.nvim_set_keymap('n', '<leader>dr', ':lua require("dap").repl.open()<CR>', { silent = true })
-        vim.api.nvim_set_keymap('n', '<leader>dl', ':lua require("dap").run_last()<CR>', { silent = true })
+        vim.keymap.set('n', '<F5>', function() require('dap').continue() end)
+        vim.keymap.set('n', '<F10>', function() require('dap').step_over() end)
+        vim.keymap.set('n', '<F11>', function() require('dap').step_into() end)
+        vim.keymap.set('n', '<F12>', function() require('dap').step_out() end)
+        vim.keymap.set('n', '<Leader>b', function() require('dap').toggle_breakpoint() end)
+        vim.keymap.set('n', '<Leader>B', function() require('dap').set_breakpoint() end)
+        vim.keymap.set('n', '<Leader>lp', function() require('dap').set_breakpoint(nil, nil, vim.fn.input('Log point message: ')) end)
+        vim.keymap.set('n', '<Leader>dr', function() require('dap').repl.open() end)
+        vim.keymap.set('n', '<Leader>dl', function() require('dap').run_last() end)
+        vim.keymap.set({'n', 'v'}, '<Leader>dh', function()
+          require('dap.ui.widgets').hover()
+        end)
+        vim.keymap.set({'n', 'v'}, '<Leader>dp', function()
+          require('dap.ui.widgets').preview()
+        end)
+        vim.keymap.set('n', '<Leader>df', function()
+          local widgets = require('dap.ui.widgets')
+          widgets.centered_float(widgets.frames)
+        end)
+        vim.keymap.set('n', '<Leader>ds', function()
+          local widgets = require('dap.ui.widgets')
+          widgets.centered_float(widgets.scopes)
+        end)
       '';
     }
     {
       plugin = np.nvim-dap-ui;
       type = "lua";
       config = ''
-        require("dapui").setup()
-        vim.api.nvim_set_keymap('n', '<leader>d', ':lua require("dapui").toggle()<CR>', {})
+        local dap, dapui = require("dap"), require("dapui")
+        dapui.setup()
+        vim.keymap.set('n', '<leader>dt', ':lua require("dapui").toggle()<CR>', {})
+        vim.keymap.set({'n', 'v'}, '<leader>de', ':lua require("dapui").eval()<CR>', { silent = true })
+        dap.listeners.before.attach.dapui_config = function()
+          dapui.open()
+        end
+        dap.listeners.before.launch.dapui_config = function()
+          dapui.open()
+        end
+        dap.listeners.before.event_terminated.dapui_config = function()
+          dapui.close()
+        end
+        dap.listeners.before.event_exited.dapui_config = function()
+          dapui.close()
+        end
       '';
+    }
+    {
+      plugin = np.nvim-dap-virtual-text;
+      type = "lua";
+      config = ''
+        	  require("nvim-dap-virtual-text").setup()
+        	'';
     }
     {
       plugin = np.nvim-dap-python;
@@ -425,6 +479,36 @@ let
         })
       '';
     }
+    {
+      plugin = pkgs.vimUtils.buildVimPlugin {
+        name = "cmake-tools";
+        src = pkgs.fetchFromGitHub {
+          owner = "Civitasv";
+          repo = "cmake-tools.nvim";
+          rev = "a4cd0b3a2c8a166a54b36bc00579954426748959";
+          hash = "sha256-6A78j0CGDpoRcFWAlzviUB92kAemt9Dlzic1DvZNJ64=";
+        };
+      };
+      type = "lua";
+      config = ''
+        require("cmake-tools").setup({})
+      '';
+    }
+    # {
+    #   plugin = pkgs.vimUtils.buildVimPlugin {
+    #     name = "neovim-tasks";
+    #     src = pkgs.fetchFromGitHub {
+    #       owner = "Shatur";
+    #       repo = "neovim-tasks";
+    #       rev = "12fbbff7e91b1d07498f0574505e9d48baa9d7bf";
+    #       hash = "sha256-tjAskAsxPUZp1NS+Bz+MvrztVgjz6MuHlb3N/np+f+Q=";
+    #     };
+    #   };
+    #   type = "lua";
+    #   config = ''
+    #     require("tasks").setup({})
+    #   '';
+    # }
   ];
 
   workspace-symbols = {
@@ -578,6 +662,18 @@ in
       }
       {
         plugin = np.markdown-preview-nvim;
+      }
+      {
+        plugin = pkgs.vimUtils.buildVimPlugin {
+          pname = "linediff.vim";
+          version = "20240423";
+          src = pkgs.fetchFromGitHub {
+            owner = "AndrewRadev";
+            repo = "linediff.vim";
+            rev = "ddae71ef5f94775d101c1c70032ebe8799f32745";
+            hash = "sha256-ZyQzLpzvS887J1Gdxv1edC9MhPj1EEITh27rUPuFugU=";
+          };
+        };
       }
     ];
   };

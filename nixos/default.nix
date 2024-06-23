@@ -21,6 +21,7 @@ inputs: {
   trackpad = import ./trackpad;
   virtualbox = import ./virtualbox;
   xserver = import ./xserver;
+  tabby = import ./tabby;
   default = {
     networking.firewall.allowedTCPPorts = [ 8000 ];
     imports = [

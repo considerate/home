@@ -14,14 +14,16 @@
   };
   security.pam.services.swaylock = { };
   services.gnome.gnome-keyring.enable = lib.mkForce true;
+  services.displayManager = {
+    autoLogin = {
+      enable = true;
+      user = lib.mkDefault "considerate";
+    };
+    defaultSession = "hyprland";
+  };
   services.xserver = {
     enable = true;
     dpi = 220;
     desktopManager.gnome.enable = true;
-    displayManager.autoLogin = {
-      enable = true;
-      user = lib.mkDefault "considerate";
-    };
-    displayManager.defaultSession = "hyprland";
   };
 }
