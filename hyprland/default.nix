@@ -10,6 +10,7 @@ in
   imports = [
     ./waybar
   ];
+  programs.wofi.enable = true;
   home = {
     sessionVariables = {
       EDITOR = "nvim";
@@ -193,7 +194,7 @@ in
             ''$mod, M, exit,''
             ''$mod, V, togglefloating,''
             ''$mod, W, exec, wallpaper_random # change wallpaper''
-            ''$mod, P, exec, pkill rofi || rofi -no-lazy-grab -show drun -theme launcher''
+            ''$mod, P, exec, wofi --allow-images --show drun --no-actions''
             ''$mod, D, pseudo, # dwindle''
             ''$mod, SPACE, togglesplit,''
             ''$mod, RETURN, exec, run-as-service kitty''
