@@ -238,6 +238,15 @@ let
     '';
   };
 
+  lang-cpp.programs.neovim = {
+    extraPackages = [ pkgs.ccls ];
+    plugins = [ np.nvim-treesitter-parsers.cpp ];
+    formatters.cpp.exe = "${pkgs.clang-tools}/bin/clang-format";
+    extraLspConfig = ''
+      lspconfig.ccls.setup({})
+    '';
+  };
+
   lang-nix.programs.neovim = {
     extraPackages = [ pkgs.nil ];
     plugins = [ np.nvim-treesitter-parsers.nix ];
@@ -434,6 +443,7 @@ in
     formatters
     treesitter
     lang-nix
+    lang-cpp
     lang-haskell
     lang-rust
     lang-bash
@@ -500,7 +510,7 @@ in
     plugins = [
       # Colors
       {
-        plugin = np.nvim-base16;
+        plugin = np.base16-nvim;
         config = ''
           set termguicolors
           set background=dark

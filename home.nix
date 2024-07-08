@@ -13,7 +13,6 @@ inputs: {
   shells = import ./shells;
   direnv = import ./direnv;
   desktop = import ./desktop;
-  st = import ./st;
   fonts = import ./fonts;
   autorandr = import ./autorandr;
   picom = import ./picom;
@@ -28,7 +27,6 @@ inputs: {
   sxiv = import ./sxiv;
   nnn = import ./nnn;
   go = import ./go;
-  wezterm = import ./wezterm;
   considerate = { lib, ... }: {
     home.sessionVariables = { EDITOR = "nvim"; };
     home.stateVersion = "22.11";
@@ -43,8 +41,6 @@ inputs: {
       inputs.self.homeModules.shells
       inputs.self.homeModules.direnv
       inputs.self.homeModules.desktop
-      inputs.self.homeModules.st
-      inputs.self.homeModules.wezterm
       inputs.self.homeModules.fonts
       inputs.self.homeModules.autorandr
       inputs.self.homeModules.picom
