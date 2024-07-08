@@ -267,14 +267,6 @@ let
     '';
   };
 
-  lang-cpp.programs.neovim = {
-    extraPackages = [ pkgs.ccls ];
-    plugins = [ np.nvim-treesitter-parsers.cpp ];
-    formatters.cpp.exe = "${pkgs.clang-tools}/bin/clang-format";
-    extraLspConfig = ''
-      lspconfig.ccls.setup({})
-    '';
-  };
 
   lang-nix.programs.neovim = {
     extraPackages = [ pkgs.nil ];

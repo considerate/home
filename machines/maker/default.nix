@@ -51,7 +51,7 @@ inputs.nixpkgs.lib.nixosSystem {
         "nvidia_uvm"
         "nvidia_drm"
       ];
-      boot.kernelParams = [ "nvidia.NVReg_PreserveVideoMemoryAllocations=1" "nvidia_drm.modeset=1" "ibt=off" ];
+      boot.kernelParams = [ "nvidia.NVReg_PreserveVideoMemoryAllocations=1" ];
       hardware.nvidia.powerManagement.enable = true;
       hardware.nvidia.open = false;
     }

@@ -26,8 +26,7 @@ in
       pkgs.swww
       pkgs.cinnamon.nemo
     ];
-    file = {
-      kitty = {
+    file = { kitty = {
         source = ./kitty.conf;
         target = "${config.xdg.configHome}/kitty/kitty.conf";
       };
