@@ -61,9 +61,6 @@ in
         exec-once = [
           "swww init; wallpaper_random"
         ];
-        env = [
-          # "WLR_RENDERER_ALLOW_SOFTWARE,1"
-        ];
         misc.force_default_wallpaper = 0;
         decoration = {
           # See https://wiki.hyprland.org/Configuring/Variables/ for more
