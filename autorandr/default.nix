@@ -13,7 +13,7 @@ lib.mkIf config.considerate.desktop {
     Install.WantedBy = [ "sleep.target" ];
   };
   programs.autorandr = {
-    enable = true;
+    enable = false;
     profiles = {
       laptop = {
         fingerprint = {

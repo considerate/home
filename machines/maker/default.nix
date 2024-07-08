@@ -19,7 +19,7 @@ inputs.nixpkgs.lib.nixosSystem {
     inputs.self.nixosModules.redshift
     inputs.self.nixosModules.tex
     inputs.self.nixosModules.trackpad
-    inputs.self.nixosModules.xserver
+    inputs.self.nixosModules.hyprland
     inputs.self.nixosModules.display-manager
     ({ pkgs, ... }: {
       programs.nix-ld.enable = true;
@@ -44,17 +44,30 @@ inputs.nixpkgs.lib.nixosSystem {
       nix.settings.trusted-users = [ "root" "@wheel" ];
       users.users.viktor.extraGroups = [ "docker" ];
     }
-    {
-      services.xserver.videoDrivers = [
-        "nvidia"
-        "nvidia_modeset"
-        "nvidia_uvm"
-        "nvidia_drm"
-      ];
-      boot.kernelParams = [ "nvidia.NVReg_PreserveVideoMemoryAllocations=1" ];
-      hardware.nvidia.powerManagement.enable = true;
-      hardware.nvidia.open = false;
-    }
+    ({ pkgs, config, ... }:
+      let
+        unstable = import inputs.unstable {
+          system = pkgs.stdenv.system;
+          config.allowUnfree = true;
+        };
+      in
+      {
+        services.xserver.videoDrivers = [
+          "nvidia"
+          "nvidia_modeset"
+          "nvidia_uvm"
+          "nvidia_drm"
+        ];
+        boot.kernelPackages = unstable.linuxPackages_latest;
+        hardware.nvidia.package = config.boot.kernelPackages.nvidiaPackages.beta;
+        boot.kernelParams = [
+          "nvidia.NVReg_PreserveVideoMemoryAllocations=1"
+          "nvidia-drm.modeset=1"
+          "nvidia-drm.fbdev=1"
+        ];
+        hardware.nvidia.powerManagement.enable = true;
+        hardware.nvidia.open = false;
+      })
     {
       age.identityPaths = [
         "/etc/ssh/ssh_host_rsa_key"
@@ -81,41 +94,19 @@ inputs.nixpkgs.lib.nixosSystem {
       home-manager = {
         useGlobalPkgs = true;
         useUserPackages = true;
+        backupFileExtension = ".bak";
         users = {
           viktor =
             let
-              hyprland-maker = {
-                wayland.windowManager.hyprland.settings = {
-                  # change monitor to high resolution, the last argument is the scale factor
-                  xwayland.force_zero_scaling = true;
-                  monitor = ",highres,auto,2";
-                  env =
-                    [
-                      "GDK_SCALE,2"
-                      "XCURSOR_SIZE,32"
-                      "LIBVA_DRIVER_NAME,nvidia"
-                      "XDG_SESSION_TYPE,wayland"
-                      "GBM_BACKEND,nvidia-drm"
-                      "__GLX_VENDOR_LIBRARY_NAME,nvidia"
-                      "WLR_NO_HARDWARE_CURSORS,1"
-                      "XDG_CURRENT_DESKTOP,Hyprland"
-                      "XDG_SESSION_DESKTOP,Hyprland"
-                    ];
-                };
-              };
-              no-picom = {
-                services.picom.enable = lib.mkForce false;
-              };
               nix-index = {
                 programs.nix-index.enable = true;
               };
             in
             {
               imports = [
-                no-picom
-                hyprland-maker
                 nix-index
                 inputs.self.homeModules.considerate
+                inputs.hyprland.homeManagerModules.default
               ];
               considerate.desktop = true;
             };
@@ -135,9 +126,11 @@ inputs.nixpkgs.lib.nixosSystem {
         firewall.allowedUDPPorts = [ 5568 5569 ];
       };
     }
-    {
+    ({ pkgs, ... }: {
+      hardware.opengl.enable = true;
       programs.hyprland.enable = true;
-    }
+      programs.hyprland.package = inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.hyprland;
+    })
     {
       location = {
         latitude = 35.0;

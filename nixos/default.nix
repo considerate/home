@@ -20,7 +20,7 @@ inputs: {
   tex = import ./tex;
   trackpad = import ./trackpad;
   virtualbox = import ./virtualbox;
-  xserver = import ./xserver;
+  hyprland = import ./hyprland;
   tabby = import ./tabby;
   default = {
     networking.firewall.allowedTCPPorts = [ 8000 ];
@@ -41,7 +41,7 @@ inputs: {
       inputs.self.nixosModules.ssh
       inputs.self.nixosModules.tex
       inputs.self.nixosModules.trackpad
-      inputs.self.nixosModules.xserver
+      inputs.self.nixosModules.hyprland
       inputs.self.nixosModules.display-manager
     ];
   };

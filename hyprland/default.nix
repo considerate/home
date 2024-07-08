@@ -26,7 +26,8 @@ in
       pkgs.swww
       pkgs.cinnamon.nemo
     ];
-    file = { kitty = {
+    file = {
+      kitty = {
         source = ./kitty.conf;
         target = "${config.xdg.configHome}/kitty/kitty.conf";
       };
@@ -49,16 +50,6 @@ in
     };
   };
   wayland.windowManager.hyprland =
-    let
-      input-method = osConfig.i18n.inputMethod.enabled;
-      xim-program = "${osConfig.i18n.inputMethod.package}/bin/${input-method}";
-      start-input-methods = {
-        fcitx5 = "${xim-program} -D";
-        ibus = "${osConfig.i18n.inputMethod.package}/bin/ibus-daemon";
-      };
-      start-input-method = start-input-methods.${input-method};
-      im = if input-method == "fcitx5" then "fcitx" else input-method;
-    in
     {
       enable = true;
       systemd.enable = true;
@@ -69,13 +60,9 @@ in
         ];
         exec-once = [
           "swww init; wallpaper_random"
-          "${start-input-method}"
         ];
         env = [
-          "GLFW_IM_MODULE,${im}"
-          "XMODIFIERS,@im=${im}"
-          "QT_IM_MODULE,${im}"
-          "XIM_PROGRAM,${xim-program}"
+          # "WLR_RENDERER_ALLOW_SOFTWARE,1"
         ];
         misc.force_default_wallpaper = 0;
         decoration = {
@@ -139,9 +126,6 @@ in
           preserve_split = true;
         };
 
-        master = {
-          new_is_master = true;
-        };
 
         gestures = {
           workspace_swipe = false;

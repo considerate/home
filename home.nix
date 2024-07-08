@@ -1,9 +1,4 @@
 inputs: {
-  hyprland = {
-    imports = [
-      (import ./hyprland)
-    ];
-  };
   colors = import ./colors;
   neovim = import ./neovim;
   ranger = import ./ranger;
@@ -25,6 +20,7 @@ inputs: {
   sxiv = import ./sxiv;
   nnn = import ./nnn;
   go = import ./go;
+  hyprland = import ./hyprland;
   vscode = { pkgs, ... }: {
     programs.vscode = {
       enable = true;
