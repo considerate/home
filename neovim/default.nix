@@ -309,9 +309,6 @@ let
       plugins = [ np.nvim-treesitter-parsers.python ];
       formatters.python = {
         exe = "${ruff-wrapper}";
-        args = [
-          "format"
-        ];
         stdin = false;
       };
       extraLspConfig = ''
