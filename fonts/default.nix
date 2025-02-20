@@ -34,7 +34,7 @@ in
   home.packages = lib.optionals config.fonts.fontconfig.enable [
     pkgs.fira-code
     pkgs.noto-fonts
-    pkgs.noto-fonts-cjk
+    pkgs.noto-fonts-cjk-sans
     pkgs.fontconfig
     pkgs.inter
     (pkgs.nerdfonts.override {
