@@ -37,9 +37,9 @@ in
     pkgs.noto-fonts-cjk-sans
     pkgs.fontconfig
     pkgs.inter
-    (pkgs.nerdfonts.override {
-      fonts = [ "FiraCode" "Noto" "NerdFontsSymbolsOnly" ];
-    })
+    pkgs.nerd-fonts.fira-code
+    pkgs.nerd-fonts.noto
+    pkgs.nerd-fonts.symbols-only
     (defaultFontsConf {
       defaultFonts = {
         monospace = [ "FiraCode Nerd Font" "Fira Code Retina" "Noto Sans Mono DemiLight" "Noto Mono" ];
