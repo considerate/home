@@ -1,8 +1,8 @@
 {
   inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/release-24.05";
+    nixpkgs.url = "github:NixOS/nixpkgs";
     unstable.url = "github:NixOS/nixpkgs";
-    home-manager.url = "github:nix-community/home-manager/release-24.05";
+    home-manager.url = "github:nix-community/home-manager";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
     nixos-hardware.url = "github:NixOS/nixos-hardware";
     agenix.url = "github:ryantm/agenix";
@@ -14,11 +14,16 @@
     homeModules = import ./home.nix inputs;
     homeConfigurations = {
       considerate = inputs.home-manager.lib.homeManagerConfiguration {
-        system = "x86_64-linux";
-        homeDirectory = "/home/considerate";
-        username = "considerate";
-        stateVersion = "23.11";
-        configuration = inputs.self.homeModules.considerate;
+        pkgs = inputs.nixpkgs.legacyPackages.x86_64-linux;
+        modules = [
+          {
+            home = {
+              username = "considerate";
+              homeDirectory = "/home/considerate";
+            };
+          }
+          inputs.self.homeModules.considerate
+        ];
       };
     };
     nixosConfigurations = {

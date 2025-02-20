@@ -36,7 +36,6 @@ inputs: {
     home.stateVersion = "22.11";
     manual.manpages.enable = true;
     imports = [
-      inputs.self.homeModules.vscode
       inputs.self.homeModules.go
       inputs.self.homeModules.colors
       inputs.self.homeModules.neovim
